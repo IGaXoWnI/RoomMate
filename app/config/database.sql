@@ -57,7 +57,7 @@ CREATE TABLE Message (
     FOREIGN KEY (destinataire_id) REFERENCES Utilisateur(id)
 );
 
-CREATE TABLE Administrateur (
+CREATE TABLE Administrateurs (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nom VARCHAR(255),
     email VARCHAR(255) UNIQUE,
