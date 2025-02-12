@@ -32,6 +32,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 
 Route::get('/profile', [AuthController::class, 'profile']);
+Route::post('/update-profile', [AuthController::class, 'updateProfile']);
 
 
 // Dispatch the request
