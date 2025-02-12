@@ -24,11 +24,14 @@ Route::get('/' , [HomeController::class , "index1"]);
 // auth routes 
 Route::get('/register', [AuthController::class, 'showRegister']);
 Route::post('/register', [AuthController::class, 'handleRegister']);
+Route::get('/otp', [AuthController::class, 'showOtp']);
+Route::post('/handleOtp', [AuthController::class, 'handleOtp']);
 Route::get('/login', [AuthController::class, 'showleLogin']);
 Route::post('/login', [AuthController::class, 'handleLogin']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 
+Route::get('/profile', [AuthController::class, 'profile']);
 
 
 // Dispatch the request
