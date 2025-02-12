@@ -25,6 +25,8 @@ Route::get('/' , [HomeController::class , "showHome"]);
 // auth routes 
 Route::get('/register', [AuthController::class, 'showRegister']);
 Route::post('/register', [AuthController::class, 'handleRegister']);
+Route::get('/otp', [AuthController::class, 'showOtp']);
+Route::post('/handleOtp', [AuthController::class, 'handleOtp']);
 Route::get('/login', [AuthController::class, 'showleLogin']);
 Route::post('/login', [AuthController::class, 'handleLogin']);
 Route::post('/logout', [AuthController::class, 'logout']);
@@ -32,6 +34,7 @@ Route::get('/post-housing', [HousingController::class, 'showPostHousingForm']);
 Route::post('/post-housing', [HousingController::class, 'handlePostHousing']);
 
 
+Route::get('/profile', [AuthController::class, 'profile']);
 
 
 // Dispatch the request
