@@ -15,7 +15,7 @@ CREATE TABLE Utilisateur (
 
 CREATE TABLE Annonce (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    type ENUM('Jai un Logement', 'Recherche Logement/Colocataires'),
+    type ENUM('J\'ai un Logement', 'Recherche Logement/Colocataires'),
     utilisateur_id INT,
     localisation VARCHAR(255),
     loyer FLOAT,
@@ -57,6 +57,12 @@ CREATE TABLE Message (
     FOREIGN KEY (destinataire_id) REFERENCES Utilisateur(id)
 );
 
+CREATE TABLE Administrateur (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nom VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
+    mot_de_passe VARCHAR(255)
+);
 
 CREATE TABLE Signalement (
     id INT PRIMARY KEY AUTO_INCREMENT,
