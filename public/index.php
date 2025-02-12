@@ -19,7 +19,7 @@ Route::setRouter($router);
 
 
 
-Route::get('/' , [HomeController::class , "showHome"]);
+Route::get('/home' , [HomeController::class , "showHome"]);
 
 // Define routes
 // auth routes 
@@ -30,6 +30,7 @@ Route::post('/handleOtp', [AuthController::class, 'handleOtp']);
 Route::get('/login', [AuthController::class, 'showleLogin']);
 Route::post('/login', [AuthController::class, 'handleLogin']);
 Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/post-housing', [HousingController::class, 'showPostHousingForm']);
 Route::post('/post-housing', [HousingController::class, 'handlePostHousing']);
 
@@ -42,6 +43,7 @@ Route::post('/dashboard/delete-user', [AdminController::class, 'deleteUser']);
 
 
 Route::get('/profile', [AuthController::class, 'profile']);
+Route::post('/update-profile', [AuthController::class, 'updateProfile']);
 
 
 // Dispatch the request

@@ -124,7 +124,7 @@ class AuthController extends BaseController {
                 if ($user['role'] === 'admin') {
                     header('Location: /admin/dashboard.php');
                 } else if ($user['role'] === 'youcoder') {
-                    header('Location: /youcoder/home.php');
+                    header('Location: /home');
                 }
              }else{
                 $_SESSION['error'] = "Wrong Email or Password, Plaise Try Again!";
@@ -142,6 +142,30 @@ class AuthController extends BaseController {
     $this->render('youcoder/profile',['user'=>$user]);
    }
 
+   public function updateProfile(){
+    if($_SERVER['REQUEST_METHOD']=="POST"){
+    
+        $fileName = $_FILES['image']['name'];
+        $folder = 'assets/images/'.$fileName;
+
+
+        $data = [
+            'nom_complet' => $_POST['nom_complet'],
+            'email' => $_POST['email'],
+            'annee_etudes' => $_POST['annee_etudes'],
+            'ville_origine' => $_POST['ville_origine'],
+            'ville_actuelle' => $_POST['ville_actuelle'],
+            'biographie' => $_POST['biographie'],
+            'preferences' => $_POST['preferences'],
+            'image_name' => $_FILES['image']['name'],
+            'id' => $_SESSION['user_id']
+        ];
+
+        $this->UserModel->updateUser($data);
+        $user = $this->UserModel->getUserData($_SESSION['user_id']);
+        $this->render('youcoder/profile',['user'=>$user]);
+    }
+   }
 
 
    public function logout() {
@@ -150,7 +174,7 @@ class AuthController extends BaseController {
              unset($_SESSION['user_role']);
              session_destroy();
             
-             header("Location: /login");
+             header("Location: /home");
              exit;
          }
    }

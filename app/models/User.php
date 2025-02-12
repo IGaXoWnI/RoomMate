@@ -30,4 +30,10 @@ public function getUserData($id){
     return $result->fetch(PDO::FETCH_ASSOC);
 }
 
+public function updateUser($data){
+    $result = $this->conn->prepare("update utilisateur set nom_complet=?,email=?,annee_etudes=?,ville_origine=?,ville_actuelle=?,biographie=?,preferences=?,photo_profil=? where id=?");
+    $result->execute([$data['nom_complet'],$data['email'],$data['annee_etudes'],$data['ville_origine'],$data['ville_actuelle'],$data['biographie'],$data['preferences'],$data['photo_profil'],$data['id']]);
+    return true;
+}
+
 }

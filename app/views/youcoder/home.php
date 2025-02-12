@@ -31,14 +31,25 @@
                 </div>
                 
                 <!-- Right Navigation -->
+                 <?php if(isset($_SESSION['user_id'])): ?>
                 <div class="flex items-center space-x-4">
+                    <a href="/profile" class="text-white hover:text-accent-light px-3 py-2 text-sm font-medium transition duration-150 ease-in-out">
+                        Profile
+                    </a>    
+                    <a href="/logout" class="text-white hover:text-accent-light px-3 py-2 text-sm font-medium transition duration-150 ease-in-out">
+                        Logout
+                    </a>    
+                        </div>
+                <?php else: ?>
+                    <div class="flex items-center space-x-4">
                     <a href="/login" class="text-white hover:text-accent-light px-3 py-2 text-sm font-medium transition duration-150 ease-in-out">
                         Login
                     </a>
                     <a href="/register" class="border-2 border-white text-white hover:bg-white hover:text-primary-dark px-4 py-2 rounded-lg text-sm font-medium transition duration-150 ease-in-out">
                         Get Started
                     </a>
-                </div>
+                        </div>
+                <?php endif; ?> 
             </div>
         </div>
     </nav>
