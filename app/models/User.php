@@ -30,5 +30,4 @@ public function getUserData($id){
     return $result->fetch(PDO::FETCH_ASSOC);
 }
 
-
 }

@@ -97,132 +97,169 @@
               </h1>
             </div>
 
-            <!-- Table -->
-            <div class="bg-white rounded-lg border border-[#D8C4B6]/20">
-              <div class="p-6 border-b border-[#F5EFE7]">
-                <div class="flex items-center justify-between">
-                  <div>
-                    <h2 class="text-xl font-semibold text-[#213555]">Liste des Utilisateurs</h2>
-                    <p class="text-sm text-[#3E5879] mt-1">Gérez vos utilisateurs facilement</p>
-                  </div>
-                  
-                  <!-- Bouton simplifié -->
-                  <button class="inline-flex items-center gap-2 px-4 py-2 bg-[#213555] text-white rounded-lg hover:bg-[#3E5879] transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
-                    </svg>
-                    <span>Ajouter un utilisateur</span>
-                  </button>
-                </div>
-              </div>
-
-              <!-- Table redesignée -->
-              <div class="overflow-x-auto">
-                <table class="w-full">
-                  <thead>
-                    <tr>
-                      <th class="text-left px-8 py-4 text-sm font-medium text-[#213555] bg-[#F5EFE7]">Utilisateur</th>
-                      <th class="text-left px-8 py-4 text-sm font-medium text-[#213555] bg-[#F5EFE7]">Email</th>
-                      <th class="text-left px-8 py-4 text-sm font-medium text-[#213555] bg-[#F5EFE7]">Role</th>
-                      <th class="text-left px-8 py-4 text-sm font-medium text-[#213555] bg-[#F5EFE7]">Status</th>
-                      <th class="text-left px-8 py-4 text-sm font-medium text-[#213555] bg-[#F5EFE7]">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-[#F5EFE7]">
-                    <tr class="hover:bg-[#F5EFE7]/30 transition-colors">
-                      <td class="px-8 py-4">
-                        <div class="flex items-center gap-3">
-                          <div class="w-10 h-10 rounded-lg bg-[#213555] flex items-center justify-center text-white font-medium">
-                            JS
-                          </div>
-                          <div>
-                            <p class="text-sm font-medium text-[#213555]">John Smith</p>
-                            <p class="text-xs text-[#3E5879]">Inscrit le 12 Jan 2024</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="px-8 py-4">
-                        <p class="text-sm text-[#213555]">john.smith@example.com</p>
-                        <p class="text-xs text-[#3E5879]">Email vérifié</p>
-                      </td>
-                      <td class="px-8 py-4">
-                        <span class="inline-block px-3 py-1 text-xs font-medium bg-[#F5EFE7] text-[#213555] rounded-md">
-                          Admin
-                        </span>
-                      </td>
-                      <td class="px-8 py-4">
-                        <select class="w-32 text-sm px-3 py-1.5 rounded-md border border-[#D8C4B6] bg-white text-[#213555] focus:outline-none focus:border-[#3E5879]">
-                          <option>Actif</option>
-                          <option>Inactif</option>
-                          <option>Bloqué</option>
-                        </select>
-                      </td>
-                      <td class="px-8 py-4">
-                        <div class="flex items-center gap-2">
-                          <button class="p-2 hover:bg-[#F5EFE7] rounded-md transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-[#3E5879]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg border border-[#D8C4B6]/20">
+                    <div class="flex items-center gap-4">
+                        <div class="p-3 bg-[#F5EFE7] rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#213555]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                             </svg>
-                          </button>
-                          <button class="p-2 hover:bg-red-50 rounded-md transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                            </svg>
-                          </button>
                         </div>
-                      </td>
-                    </tr>
-                    <!-- Répéter pour plus d'utilisateurs -->
-                  </tbody>
-                </table>
-              </div>
-
-              <!-- Pagination simplifiée -->
-              <div class="px-8 py-4 border-t border-[#F5EFE7]">
-                <div class="flex items-center justify-between">
-                  <p class="text-sm text-[#3E5879]">Affichage 1-10 sur 100</p>
-                  <div class="flex gap-2">
-                    <button class="px-4 py-1.5 text-sm border border-[#213555] text-[#213555] rounded-md hover:bg-[#F5EFE7] transition-colors">
-                      Précédent
-                    </button>
-                    <button class="px-4 py-1.5 text-sm bg-[#213555] text-white rounded-md hover:bg-[#3E5879] transition-colors">
-                      Suivant
-                    </button>
-                  </div>
+                        <div>
+                            <p class="text-sm text-[#3E5879]">Total Utilisateurs</p>
+                            <p class="text-2xl font-semibold text-[#213555]"><?= $totalUsers ?></p>
+                        </div>
+                    </div>
                 </div>
-              </div>
+                
+                <div class="bg-white p-6 rounded-lg border border-[#D8C4B6]/20">
+                    <div class="flex items-center gap-4">
+                        <div class="p-3 bg-[#F5EFE7] rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#213555]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm text-[#3E5879]">Admins</p>
+                            <p class="text-2xl font-semibold text-[#213555]"><?= $adminCount ?></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg border border-[#D8C4B6]/20">
+                    <div class="flex items-center gap-4">
+                        <div class="p-3 bg-[#F5EFE7] rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-[#213555]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="text-sm text-[#3E5879]">YouCoders</p>
+                            <p class="text-2xl font-semibold text-[#213555]"><?= $youcoderCount ?></p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </section>
 
-        <!----------------------------------------------- GESTION DES CONTENU ----------------------------------------------------------->
+            <!-- Users Table -->
+            <div class="bg-white rounded-lg border border-[#D8C4B6]/20">
+                <div class="p-6 border-b border-[#F5EFE7]">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-xl font-semibold text-[#213555]">Liste des Utilisateurs</h2>
+                            <p class="text-sm text-[#3E5879] mt-1">Gérez vos utilisateurs facilement</p>
+                        </div>
+                    </div>
+                </div>
 
-      </section>
-    </div>
-  </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr>
+                                <th class="text-left px-8 py-4 text-sm font-medium text-[#213555] bg-[#F5EFE7]">Utilisateur</th>
+                                <th class="text-left px-8 py-4 text-sm font-medium text-[#213555] bg-[#F5EFE7]">Email</th>
+                                <th class="text-left px-8 py-4 text-sm font-medium text-[#213555] bg-[#F5EFE7]">Ville origine</th>
+                                <th class="text-left px-8 py-4 text-sm font-medium text-[#213555] bg-[#F5EFE7]">Role</th>
+                                <th class="text-left px-8 py-4 text-sm font-medium text-[#213555] bg-[#F5EFE7]">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-[#F5EFE7]">
+                            <?php foreach($users as $user): ?>
+                                <tr class="hover:bg-[#F5EFE7]/30 transition-colors">
+                                    <td class="px-8 py-4">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-10 h-10 rounded-lg bg-[#213555] flex items-center justify-center text-white font-medium">
+                                                <?= !empty($user['username']) ? strtoupper(substr($user['username'], 0, 2)) : 'U' ?>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-medium text-[#213555]">
+                                                    <?= !empty($user['nom_complet']) ? htmlspecialchars($user['nom_complet']) : 'Non défini' ?>
+                                                </p>
+                                                <p class="text-xs text-[#3E5879]">
+                                                    @<?= !empty($user['username']) ? htmlspecialchars($user['username']) : 'utilisateur' ?>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-8 py-4">
+                                        <p class="text-sm text-[#213555]">
+                                            <?= !empty($user['email']) ? htmlspecialchars($user['email']) : 'Non défini' ?>
+                                        </p>
+                                    </td>
+                                    <td class="px-8 py-4">
+                                        <p class="text-sm text-[#213555]">
+                                            <?= !empty($user['ville_origine']) ? htmlspecialchars($user['ville_origine']) : 'Non défini' ?>
+                                        </p>
+                                    </td>
+                                    <td class="px-8 py-4">
+                                        <div class="flex items-center gap-2">
+                                            <form action="/dashboard/update-role" method="POST" class="role-form">
+                                                <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                                                <select name="role" 
+                                                        class="w-32 text-sm px-3 py-1.5 rounded-md border border-[#D8C4B6] bg-white text-[#213555] focus:outline-none focus:border-[#3E5879] cursor-pointer hover:bg-[#F5EFE7] transition-all"
+                                                        onchange="this.form.submit()">
+                                                    <option value="youcoder" <?= (!empty($user['role']) && $user['role'] === 'youcoder') ? 'selected' : '' ?>>
+                                                        YouCoder
+                                                    </option>
+                                                    <option value="admin" <?= (!empty($user['role']) && $user['role'] === 'admin') ? 'selected' : '' ?>>
+                                                        Admin
+                                                    </option>
+                                                </select>
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <td>
+                                      
+                                      <form action="/dashboard/delete-user" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+                                        <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
+                                        <!-- Bouton de suppression avec modal de confirmation -->
+                                        <button name="delete" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');"
+                                                      class="p-2 hover:bg-red-50 rounded-md transition-colors">
+                                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                  </svg>
+                                        </button>
+                                    </form>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+  
 
 
+    <!----------------------------------------------- GESTION DES CONTENU ----------------------------------------------------------->
 
-  <script defer>
-    document.addEventListener('DOMContentLoaded', () => {
-      
-      let sidebarToggleBtn = document.getElementById('toggle-sidebar');
-      let sidebarCollapseMenu = document.getElementById('sidebar-collapse-menu');
+</section>
+</div>
+</div>
 
-      sidebarToggleBtn.addEventListener('click', () => {
-        if (!sidebarCollapseMenu.classList.contains('open')) {
-            sidebarCollapseMenu.classList.add('open');
-            sidebarCollapseMenu.style.cssText = 'width: 250px; visibility: visible; opacity: 1;';
-            sidebarToggleBtn.style.cssText = 'left: 236px;';
-        } else {
-            sidebarCollapseMenu.classList.remove('open');
-            sidebarCollapseMenu.style.cssText = 'width: 32px; visibility: hidden; opacity: 0;';
-            sidebarToggleBtn.style.cssText = 'left: 10px;';
-        }
 
-      });
+<script defer>
+  document.addEventListener('DOMContentLoaded', () => {
+    
+    let sidebarToggleBtn = document.getElementById('toggle-sidebar');
+    let sidebarCollapseMenu = document.getElementById('sidebar-collapse-menu');
+
+    sidebarToggleBtn.addEventListener('click', () => {
+      if (!sidebarCollapseMenu.classList.contains('open')) {
+          sidebarCollapseMenu.classList.add('open');
+          sidebarCollapseMenu.style.cssText = 'width: 250px; visibility: visible; opacity: 1;';
+          sidebarToggleBtn.style.cssText = 'left: 236px;';
+      } else {
+          sidebarCollapseMenu.classList.remove('open');
+          sidebarCollapseMenu.style.cssText = 'width: 32px; visibility: hidden; opacity: 0;';
+          sidebarToggleBtn.style.cssText = 'left: 10px;';
+      }
+
     });
-  </script>
+  });
+</script>
 
 </body>
 

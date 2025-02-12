@@ -36,6 +36,10 @@ Route::post('/post-housing', [HousingController::class, 'handlePostHousing']);
 
 // admin routes
 Route::get('/dashboard', [AdminController::class, 'showDashboard']);
+Route::post('/dashboard/update-role', [AdminController::class, 'updateRole']);
+Route::post('/dashboard/delete-user', [AdminController::class, 'deleteUser']);
+
+
 
 Route::get('/profile', [AuthController::class, 'profile']);
 
