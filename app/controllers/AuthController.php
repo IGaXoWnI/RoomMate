@@ -124,7 +124,7 @@ class AuthController extends BaseController {
                 if ($user['role'] === 'admin') {
                     header('Location: /admin/dashboard.php');
                 } else if ($user['role'] === 'youcoder') {
-                    header('Location: /youcoder/home');
+                    header('Location: /home');
                 }
              }else{
                 $_SESSION['error'] = "Wrong Email or Password, Plaise Try Again!";
@@ -174,7 +174,7 @@ class AuthController extends BaseController {
              unset($_SESSION['user_role']);
              session_destroy();
             
-             header("Location: /login");
+             header("Location: /home");
              exit;
          }
    }

@@ -48,8 +48,8 @@
                 <select id="annee_etudes" name="annee_etudes" required 
                     class="w-full p-3 border border-[#D8C4B6] rounded focus:outline-none focus:border-[#213555]">
                     <option value="">Sélectionner une année</option>
-                    <option value="1er année">1ère année</option>
-                    <option value="2eme année">2ème année</option>
+                    <option value="1">1ère année</option>
+                    <option value="2">2ème année</option>
                 </select>
             </div>
 
@@ -59,7 +59,7 @@
                     class="w-full p-3 border border-[#D8C4B6] rounded focus:outline-none focus:border-[#213555]">
                     <option value="">Sélectionner un rôle</option>
                     <option value="admin">Admin</option>
-                    <option value="youcode">YouCoder</option>
+                    <option value="youcoder">YouCoder</option>
                 </select>
             </div>
 
