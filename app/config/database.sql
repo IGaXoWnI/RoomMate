@@ -1,6 +1,6 @@
 CREATE TABLE Utilisateur (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    username varchar(255),
+    username VARCHAR(255) ,
     nom_complet VARCHAR(255),
     email VARCHAR(255) UNIQUE,
     mot_de_passe VARCHAR(255),
@@ -55,13 +55,6 @@ CREATE TABLE Message (
     date_envoi DATETIME,
     FOREIGN KEY (expediteur_id) REFERENCES Utilisateur(id),
     FOREIGN KEY (destinataire_id) REFERENCES Utilisateur(id)
-);
-
-CREATE TABLE Administrateur (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    nom VARCHAR(255),
-    email VARCHAR(255) UNIQUE,
-    mot_de_passe VARCHAR(255)
 );
 
 CREATE TABLE Signalement (
