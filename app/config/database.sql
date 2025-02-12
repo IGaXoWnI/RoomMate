@@ -1,5 +1,6 @@
 CREATE TABLE Utilisateur (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255) ,
     nom_complet VARCHAR(255),
     email VARCHAR(255) UNIQUE,
     mot_de_passe VARCHAR(255),
@@ -10,12 +11,11 @@ CREATE TABLE Utilisateur (
     preferences TEXT,
     role enum("admin" , "youcoder"),
     photo_profil VARCHAR(255),
-    reference_colocataire TEXT
 );
 
 CREATE TABLE Annonce (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    type ENUM('J'ai un Logement, 'Recherche Logement/Colocataires'),
+    type ENUM('J\'ai un Logement', 'Recherche Logement/Colocataires'),
     utilisateur_id INT,
     localisation VARCHAR(255),
     loyer FLOAT,

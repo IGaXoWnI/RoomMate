@@ -13,9 +13,9 @@ class HomeController extends BaseController {
    }
 
 
-   public function index1(){
+   public function showHome(){
 
-      $this->render("Home");
+      $this->render("youcoder/home");
 
    }
 
