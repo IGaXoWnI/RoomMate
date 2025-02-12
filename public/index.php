@@ -29,6 +29,10 @@ Route::post('/login', [AuthController::class, 'handleLogin']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 
+// admin routes
+Route::get('/dashboard', [AdminController::class, 'showDashboard']);
+
+
 
 
 // Dispatch the request
