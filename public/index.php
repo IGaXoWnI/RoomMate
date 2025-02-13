@@ -10,6 +10,7 @@ require_once '../app/controllers/HomeController.php';
 require_once '../app/controllers/AuthController.php';
 require_once '../app/controllers/AdminController.php';
 require_once '../app/controllers/HousingController.php';
+require_once '../app/controllers/ProfileController.php';
 require_once '../app/config/db.php';
 
 
@@ -37,13 +38,15 @@ Route::post('/housing/store', [HousingController::class, 'store']);
 
 // admin routes
 Route::get('/dashboard', [AdminController::class, 'showDashboard']);
+Route::get('/dashboard/annonce', [AdminController::class, 'showAnnonce']);
 Route::post('/dashboard/update-role', [AdminController::class, 'updateRole']);
 Route::post('/dashboard/delete-user', [AdminController::class, 'deleteUser']);
+Route::post('/dashboard/update-annonce', [AdminController::class, 'updateAnnonceStatus']);
+Route::post('/dashboard/delete-annonce', [AdminController::class, 'deleteAnnonce']);
 
 
-
-Route::get('/profile', [AuthController::class, 'profile']);
-Route::post('/update-profile', [AuthController::class, 'updateProfile']);
+Route::get('/profile', [ProfileController::class, 'profile']);
+Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
 
 
 // Dispatch the request
