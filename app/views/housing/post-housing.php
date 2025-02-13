@@ -20,7 +20,6 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Form steps configuration
             const formSteps = [
                 { id: 'location-step', title: 'Location', progress: '33%' },
                 { id: 'details-step', title: 'Details', progress: '66%' },
@@ -29,30 +28,25 @@
             
             let currentStep = 0;
 
-            // Get DOM elements
             const progressBar = document.querySelector('[data-progress-bar]');
             const stepIndicators = document.querySelectorAll('[data-step-indicator]');
             const nextButton = document.querySelector('[data-next-btn]');
             const backButton = document.querySelector('[data-back-btn]');
             const formSections = document.querySelectorAll('[data-form-step]');
 
-            // Initialize form
             showStep(currentStep);
 
-            // Next button click handler
             nextButton.addEventListener('click', function() {
                 if (validateCurrentStep()) {
                     if (currentStep < formSteps.length - 1) {
                         currentStep++;
                         showStep(currentStep);
                     } else {
-                        // On last step, submit the form
                         document.querySelector('form').submit();
                     }
                 }
             });
 
-            // Back button click handler
             backButton.addEventListener('click', function() {
                 if (currentStep > 0) {
                     currentStep--;
@@ -61,10 +55,8 @@
             });
 
             function showStep(stepIndex) {
-                // Update progress bar
                 progressBar.style.width = formSteps[stepIndex].progress;
 
-                // Update step indicators
                 stepIndicators.forEach((indicator, index) => {
                     if (index === stepIndex) {
                         indicator.classList.add('bg-accent-light');
@@ -78,7 +70,6 @@
                     }
                 });
 
-                // Show/hide form sections
                 formSections.forEach((section, index) => {
                     if (index === stepIndex) {
                         section.classList.remove('hidden');
@@ -87,14 +78,12 @@
                     }
                 });
 
-                // Update button text on last step
                 if (stepIndex === formSteps.length - 1) {
                     nextButton.textContent = 'Submit';
                 } else {
                     nextButton.innerHTML = `Next Step <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transform group-hover:translate-x-1 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>`;
                 }
 
-                // Show/hide back button
                 if (stepIndex === 0) {
                     backButton.classList.add('invisible');
                 } else {
@@ -111,7 +100,6 @@
                     if (!field.value) {
                         isValid = false;
                         field.classList.add('border-red-500');
-                        // Add shake animation
                         field.classList.add('animate-shake');
                         setTimeout(() => {
                             field.classList.remove('animate-shake');
@@ -128,11 +116,10 @@
     <title>Post Housing - RoomMate</title>
 </head>
 <body class="bg-gradient-to-br from-background to-accent-light/10">
-    <!-- Navbar -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-primary-dark/95 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-20">
-                <a href="/" class="text-2xl font-bold text-white hover:text-accent-light transition-colors duration-300">
+                <a href="/home" class="text-2xl font-bold text-white hover:text-accent-light transition-colors duration-300">
                     RoomMate
                 </a>
             </div>
@@ -141,13 +128,11 @@
 
     <div class="min-h-screen pt-28 pb-16">
         <div class="max-w-3xl mx-auto px-4">
-            <!-- Form Header -->
             <div class="text-center mb-10">
                 <h1 class="text-4xl font-bold text-primary-dark mb-3">Post Your Housing</h1>
                 <p class="text-primary-medium/80 text-lg">Let's find your perfect roommate match</p>
             </div>
 
-            <!-- Form Steps -->
             <div class="flex justify-between items-center mb-12 relative">
                 <div class="absolute left-0 top-1/2 h-0.5 w-full bg-gray-200 -z-10"></div>
                 <div class="absolute left-0 top-1/2 h-0.5 w-1/3 bg-accent-light -z-10 transition-all duration-500" data-progress-bar></div>
@@ -166,8 +151,7 @@
                 </div>
             </div>
 
-            <form action="/post-housing" method="POST" enctype="multipart/form-data">
-                <!-- Step 1: Location -->
+            <form action="/housing/store" method="POST" enctype="multipart/form-data">
                 <div data-form-step>
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">
                         <div class="p-8">
@@ -207,7 +191,6 @@
                     </div>
                 </div>
 
-                <!-- Step 2: Details -->
                 <div data-form-step class="hidden">
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">
                         <div class="p-8">
@@ -220,7 +203,6 @@
                                 <h2 class="text-xl font-semibold text-primary-dark">Housing Details</h2>
                             </div>
 
-                            <!-- Financial Details -->
                             <div class="space-y-6">
                                 <div class="grid grid-cols-2 gap-6">
                                     <div>
@@ -233,32 +215,23 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-primary-medium/80 mb-2">Per Person</label>
-                                        <div class="relative">
-                                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">MAD</span>
-                                            <input type="number" name="rent_split" required 
-                                                class="w-full pl-14 pr-4 py-3 rounded-xl border-gray-200 focus:border-accent-light focus:ring focus:ring-accent-light/20 transition-all duration-300"
-                                                placeholder="0.00">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Capacity -->
-                                <div>
                                     <label class="block text-sm font-medium text-primary-medium/80 mb-2">Housing Capacity</label>
                                     <input type="number" name="capacity" required 
                                         class="w-full px-4 py-3 rounded-xl border-gray-200 focus:border-accent-light focus:ring focus:ring-accent-light/20 transition-all duration-300"
                                         placeholder="Number of people">
                                 </div>
+                                    
+                                </div>
 
-                                <!-- Availability -->
+                            
+                                
+
                                 <div>
                                     <label class="block text-sm font-medium text-primary-medium/80 mb-2">Available From</label>
                                     <input type="date" name="availability_date" required 
                                         class="w-full px-4 py-3 rounded-xl border-gray-200 focus:border-accent-light focus:ring focus:ring-accent-light/20 transition-all duration-300">
                                 </div>
 
-                                <!-- Amenities -->
                                 <div>
                                     <label class="block text-sm font-medium text-primary-medium/80 mb-4">Available Amenities</label>
                                     <div class="grid grid-cols-2 gap-4">
@@ -281,7 +254,6 @@
                                     </div>
                                 </div>
 
-                                <!-- House Rules -->
                                 <div>
                                     <label class="block text-sm font-medium text-primary-medium/80 mb-2">House Rules</label>
                                     <textarea name="rules" required rows="3" 
@@ -289,19 +261,12 @@
                                         placeholder="Describe your house rules..."></textarea>
                                 </div>
 
-                                <!-- Roommate Preferences -->
-                                <div>
-                                    <label class="block text-sm font-medium text-primary-medium/80 mb-2">Roommate Preferences</label>
-                                    <textarea name="preferences" required rows="3" 
-                                        class="w-full px-4 py-3 rounded-xl border-gray-200 focus:border-accent-light focus:ring focus:ring-accent-light/20 transition-all duration-300"
-                                        placeholder="Describe your ideal roommate..."></textarea>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Step 3: Photos -->
                 <div data-form-step class="hidden">
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">
                         <div class="p-8">
@@ -336,7 +301,6 @@
                     </div>
                 </div>
 
-                <!-- Navigation -->
                 <div class="flex justify-between items-center mt-10">
     <button type="button" data-back-btn class="invisible px-6 py-3 text-primary-medium hover:text-primary-dark transition-colors duration-300 flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

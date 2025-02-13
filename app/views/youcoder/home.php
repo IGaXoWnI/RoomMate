@@ -21,16 +21,13 @@
     <title>RoomMate YouCode</title>
 </head>
 <body class="bg-background">
-    <!-- Navbar -->
     <nav class="fixed top-0 left-0 right-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
-                <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center">
                     <h1 class="text-2xl font-bold text-white">RoomMate</h1>
                 </div>
                 
-                <!-- Right Navigation -->
                  <?php if(isset($_SESSION['user_id'])): ?>
                 <div class="flex items-center space-x-4">
                     <a href="/profile" class="text-white hover:text-accent-light px-3 py-2 text-sm font-medium transition duration-150 ease-in-out">
@@ -184,7 +181,7 @@
                                 Search type (join/search together)
                             </li>
                         </ul>
-                        <a href="/register" class="inline-flex items-center justify-center w-full px-6 py-3 text-base font-medium text-white bg-primary-dark rounded-lg hover:bg-primary-medium transition duration-150 ease-in-out">
+                        <a href="/home" class="inline-flex items-center justify-center w-full px-6 py-3 text-base font-medium text-white bg-primary-dark rounded-lg hover:bg-primary-medium transition duration-150 ease-in-out">
                             Find Housing
                         </a>
                     </div>
