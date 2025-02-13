@@ -33,11 +33,15 @@ Route::post('/login', [AuthController::class, 'handleLogin']);
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/post-housing', [HousingController::class, 'showPostHousingForm']);
-Route::post('/post-housing', [HousingController::class, 'handlePostHousing']);
+Route::post('/housing/store', [HousingController::class, 'store']);
 
 
 // admin routes
 Route::get('/dashboard', [AdminController::class, 'showDashboard']);
+Route::post('/dashboard/update-role', [AdminController::class, 'updateRole']);
+Route::post('/dashboard/delete-user', [AdminController::class, 'deleteUser']);
+
+
 
 Route::get('/profile', [ProfileController::class, 'profile']);
 Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
