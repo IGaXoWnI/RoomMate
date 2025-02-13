@@ -11,6 +11,7 @@ CREATE TABLE Utilisateur (
     preferences TEXT,
     role enum("admin" , "youcoder"),
     photo_profil VARCHAR(255),
+    budget int 
 );
 
 CREATE TABLE Annonce (
