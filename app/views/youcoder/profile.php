@@ -46,21 +46,21 @@
                     <div class="space-y-4">
                         <div class="bg-accent-light/20 p-4 rounded-lg">
                             <h3 class="font-semibold text-primary-dark">Email</h3>
-                            <p><?=$user['email']?></p>
+                            <p><?=$user['email'] ?? 'email'?></p>
                         </div>
                         <div class="bg-accent-light/20 p-4 rounded-lg">
                             <h3 class="font-semibold text-primary-dark">Année d'études</h3>
-                            <p><?=$user['annee_etudes']?></p>
+                            <p><?=$user['annee_etudes'] ?? 'année etudes'?></p>
                         </div>
                     </div>
                     <div class="space-y-4">
                         <div class="bg-accent-light/20 p-4 rounded-lg">
                             <h3 class="font-semibold text-primary-dark">Ville d'origine</h3>
-                            <p><?=$user['ville_origine']?></p>
+                            <p><?=$user['ville_origine'] ?? 'ville origine'?></p>
                         </div>
                         <div class="bg-accent-light/20 p-4 rounded-lg">
                             <h3 class="font-semibold text-primary-dark">Ville actuelle</h3>
-                            <p><?=$user['ville_actuelle']?></p>
+                            <p><?=$user['ville_actuelle'] ?? 'ville actuelle'?></p>
                         </div>
                     </div>
                 </div>
@@ -68,13 +68,13 @@
            
                 <div class="mt-6">
                     <h3 class="font-semibold text-primary-dark mb-2">Biographie</h3>
-                    <p class="bg-accent-light/20 p-4 rounded-lg"><?=$user['biographie']?></p>
+                    <p class="bg-accent-light/20 p-4 rounded-lg"><?=$user['biographie'] ?? 'Bio'?></p>
                 </div>
 
          
                 <div class="mt-6">
                     <h3 class="font-semibold text-primary-dark mb-2">Préférences</h3>
-                    <p class="bg-accent-light/20 p-4 rounded-lg"><?=$user['preferences']?></p>
+                    <p class="bg-accent-light/20 p-4 rounded-lg"><?=$user['preferences'] ?? 'Preferences'?></p>
                 </div>
             </div>
         </div>
@@ -90,21 +90,21 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <label class="block text-sm font-medium text-primary-dark">Photo de profil</label>
-                                <input type="file" name="photo_profil" class="mt-1 w-full">
+                                <input type="file" name="image" class="mt-1 w-full">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-primary-dark">Nom complet</label>
-                                <input type="text" name="nom_complet" value="<?=$user['nom_complet']?>" 
+                                <input type="text" name="nom_complet" value="<?=$user['nom_complet'] ?? 'Votre Nom'?>" 
                                        class="mt-1 w-full rounded-md border-gray-300 shadow-sm">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-primary-dark">Email</label>
-                                <input type="email" name="email" value="<?=$user['email']?>" 
+                                <input type="email" name="email" value="<?=$user['email'] ?? 'Email'?>" 
                                        class="mt-1 w-full rounded-md border-gray-300 shadow-sm">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-primary-dark">Année d'études</label>
-                                <select id="annee_etudes" name="<?=$user['annee_etudes']?>" required 
+                                <select id="annee_etudes" name="annee_etudes" value="<?=$user['annee_etudes'] ?? 'année etudes'?>" required 
                                     class="w-full p-3 border border-[#D8C4B6] rounded focus:outline-none focus:border-[#213555]">
                                     <option value="">Sélectionner une année</option>
                                     <option value="1er année">1ère année</option>
@@ -113,23 +113,23 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-primary-dark">Ville d'origine</label>
-                                <input type="text" name="ville_origine" value="<?=$user['ville_origine']?>" 
+                                <input type="text" name="ville_origine" value="<?=$user['ville_origine'] ?? 'ville origine'?>" 
                                        class="mt-1 w-full rounded-md border-gray-300 shadow-sm">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-primary-dark">Ville actuelle</label>
-                                <input type="text" name="ville_actuelle" value="<?=$user['ville_actuelle']?>" 
+                                <input type="text" name="ville_actuelle" value="<?=$user['ville_actuelle'] ?? 'ville actuelle'?>" 
                                        class="mt-1 w-full rounded-md border-gray-300 shadow-sm">
                             </div>
                             <div class="col-span-2">
                                 <label class="block text-sm font-medium text-primary-dark">Biographie</label>
                                 <textarea name="biographie" rows="3" 
-                                          class="mt-1 w-full rounded-md border-gray-300 shadow-sm"><?=$user['biographie']?></textarea>
+                                          class="mt-1 w-full rounded-md border-gray-300 shadow-sm"><?=$user['biographie'] ?? 'Bio'?></textarea>
                             </div>
                             <div class="col-span-2">
                                 <label class="block text-sm font-medium text-primary-dark">Préférences</label>
                                 <textarea name="preferences" rows="3" 
-                                          class="mt-1 w-full rounded-md border-gray-300 shadow-sm"><?=$user['preferences']?></textarea>
+                                          class="mt-1 w-full rounded-md border-gray-300 shadow-sm"><?=$user['preferences'] ?? 'preferences'?></textarea>
                             </div>
                         </div>
                         <div class="mt-6 flex justify-end space-x-3">
