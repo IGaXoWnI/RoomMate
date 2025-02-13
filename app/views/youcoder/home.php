@@ -69,7 +69,7 @@
                     Find your perfect roommate match among YouCode students. Share more than just a space - share your journey.
                 </p>
                 <div class="flex space-x-4">
-                    <a href="/register" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-background bg-primary-dark hover:bg-primary-medium transition duration-150 ease-in-out">
+                    <a href="/find-housing" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-background bg-primary-dark hover:bg-primary-medium transition duration-150 ease-in-out">
                         Start Exploring
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -181,7 +181,7 @@
                                 Search type (join/search together)
                             </li>
                         </ul>
-                        <a href="/home" class="inline-flex items-center justify-center w-full px-6 py-3 text-base font-medium text-white bg-primary-dark rounded-lg hover:bg-primary-medium transition duration-150 ease-in-out">
+                        <a href="/find-housing" class="inline-flex items-center justify-center w-full px-6 py-3 text-base font-medium text-white bg-primary-dark rounded-lg hover:bg-primary-medium transition duration-150 ease-in-out">
                             Find Housing
                         </a>
                     </div>
