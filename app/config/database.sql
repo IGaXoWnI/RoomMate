@@ -23,7 +23,6 @@ CREATE TABLE Utilisateur (
 
 CREATE TABLE Annonce (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    type ENUM('Jai un Logement', 'Recherche Logement/Colocataires'),
     utilisateur_id INT,
     localisation VARCHAR(255),
     loyer FLOAT,

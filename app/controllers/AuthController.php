@@ -60,8 +60,8 @@ class AuthController extends BaseController {
                 $message = "Your OTP code is: $otp";
                 $mail = new PHPMailer(true);
       
-                $mail->isSMTP();                              //Send using SMTP
-                $mail->Host       = 'smtp.gmail.com';       //Set the SMTP server to send through
+                $mail->isSMTP();                              
+                $mail->Host       = 'smtp.gmail.com';       
                 $mail->SMTPAuth   = true;             //Enable SMTP authentication
                 $mail->Username   = 'badrdine03@gmail.com';   //SMTP write your email
                 $mail->Password   = 'rtppygolrobylscs';      //SMTP password
@@ -137,35 +137,6 @@ class AuthController extends BaseController {
 
    }
 
-   public function profile(){
-    $user = $this->UserModel->getUserData($_SESSION['user_id']);
-    $this->render('youcoder/profile',['user'=>$user]);
-   }
-
-   public function updateProfile(){
-    if($_SERVER['REQUEST_METHOD']=="POST"){
-    
-        $fileName = $_FILES['image']['name'];
-        $folder = 'assets/images/'.$fileName;
-
-
-        $data = [
-            'nom_complet' => $_POST['nom_complet'],
-            'email' => $_POST['email'],
-            'annee_etudes' => $_POST['annee_etudes'],
-            'ville_origine' => $_POST['ville_origine'],
-            'ville_actuelle' => $_POST['ville_actuelle'],
-            'biographie' => $_POST['biographie'],
-            'preferences' => $_POST['preferences'],
-            'image_name' => $_FILES['image']['name'],
-            'id' => $_SESSION['user_id']
-        ];
-
-        $this->UserModel->updateUser($data);
-        $user = $this->UserModel->getUserData($_SESSION['user_id']);
-        $this->render('youcoder/profile',['user'=>$user]);
-    }
-   }
 
 
    public function logout() {
