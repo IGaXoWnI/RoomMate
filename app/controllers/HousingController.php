@@ -65,4 +65,9 @@ class HousingController extends BaseController {
             exit;
         }
     }
+
+    public function index() {
+        $listings = $this->housingModel->getAllListings();
+        $this->render('housing/index', ['listings' => $listings]);
+    }
 } 

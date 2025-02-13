@@ -67,4 +67,20 @@ class Housing {
         }
         return $photos;
     }
+
+    public function getAllListings() {
+        $sql = "SELECT 
+            a.*,
+            u.nom_complet as owner_name,
+            u.username as owner_username,
+            u.email as owner_email,
+            SUBSTRING_INDEX(a.galerie_photos, ',', 1) as main_photo
+        FROM Annonce a
+        JOIN Utilisateur u ON a.utilisateur_id = u.id
+        ORDER BY a.id DESC";
+
+        $stmt = $this->db->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 } 
