@@ -20,14 +20,16 @@
         }
     </script>
 </head>
+
 <body class="bg-background">
+    <?php include __DIR__ .'/../partials/header.php'?>
     <div class="container mx-auto px-4 py-8">
         <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-            <div class="h-48 bg-primary-dark"></div>
+            <div class="h-24 bg-primary-dark "></div>
             
             <div class="relative px-6 py-8">
                 <div class="absolute -top-16 left-6">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" 
+                    <img src="<?php echo $user['photo_profil']===null ? '/assets/images/User-Profile.png' :$user['photo_profil'] ?>" 
                          class="w-32 h-32 rounded-full border-4 border-white object-cover"
                          alt="Profile Picture">
                 </div>
@@ -38,7 +40,7 @@
                 </button>
 
                 <div class="mt-16">
-                    <h1 class="text-3xl font-bold text-primary-dark"><?=$user['nom_complet'] ?? 'nom complet'?></h1>
+                    <h1 class="text-3xl font-bold text-primary-dark"><?=$user['nom_complet'] ?? $user['username']?></h1>
                     <p class="text-primary-medium">@<?=$user['username'] ?? 'username'?></p>
                 </div>
 
@@ -49,18 +51,18 @@
                             <p><?=$user['email'] ?? 'email'?></p>
                         </div>
                         <div class="bg-accent-light/20 p-4 rounded-lg">
-                            <h3 class="font-semibold text-primary-dark">Année d'études</h3>
-                            <p><?=$user['annee_etudes'] ?? 'année etudes'?></p>
+                            <h3 class="font-semibold text-primary-dark">Ville actuelle</h3>
+                            <p><?=$user['ville_actuelle'] ?? 'Ex: Nador'?></p>
                         </div>
                     </div>
                     <div class="space-y-4">
                         <div class="bg-accent-light/20 p-4 rounded-lg">
-                            <h3 class="font-semibold text-primary-dark">Ville d'origine</h3>
-                            <p><?=$user['ville_origine'] ?? 'ville origine'?></p>
+                            <h3 class="font-semibold text-primary-dark">Estimate Budget</h3>
+                            <p><?=$user['budget'].'MAD' ?? '0.00 MAD'?></p>
                         </div>
                         <div class="bg-accent-light/20 p-4 rounded-lg">
-                            <h3 class="font-semibold text-primary-dark">Ville actuelle</h3>
-                            <p><?=$user['ville_actuelle'] ?? 'ville actuelle'?></p>
+                            <h3 class="font-semibold text-primary-dark">Ville d'origine</h3>
+                            <p><?=$user['ville_origine'] ?? 'Ex: Nador'?></p>
                         </div>
                     </div>
                 </div>
@@ -68,13 +70,13 @@
            
                 <div class="mt-6">
                     <h3 class="font-semibold text-primary-dark mb-2">Biographie</h3>
-                    <p class="bg-accent-light/20 p-4 rounded-lg"><?=$user['biographie'] ?? 'Bio'?></p>
+                    <p class="bg-accent-light/20 p-4 rounded-lg"><?=$user['biographie'] ?? 'Describe Your Self...'?></p>
                 </div>
 
          
                 <div class="mt-6">
                     <h3 class="font-semibold text-primary-dark mb-2">Préférences</h3>
-                    <p class="bg-accent-light/20 p-4 rounded-lg"><?=$user['preferences'] ?? 'Preferences'?></p>
+                    <p class="bg-accent-light/20 p-4 rounded-lg"><?=$user['preferences'] ?? 'Describe Your Ideal RoomMate...'?></p>
                 </div>
             </div>
         </div>
@@ -103,14 +105,11 @@
                                        class="mt-1 w-full rounded-md border-gray-300 shadow-sm">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-primary-dark">Année d'études</label>
-                                <select id="annee_etudes" name="annee_etudes" value="<?=$user['annee_etudes'] ?? 'année etudes'?>" required 
-                                    class="w-full p-3 border border-[#D8C4B6] rounded focus:outline-none focus:border-[#213555]">
-                                    <option value="">Sélectionner une année</option>
-                                    <option value="1er année">1ère année</option>
-                                    <option value="2eme année">2ème année</option>
-                                </select>
+                                <label class="block text-sm font-medium text-primary-dark">Estimate Budget</label>
+                                <input type="number" name="budget" value="<?=$user['budget'] ?? '0.00 MAD'?>" 
+                                       class="mt-1 w-full rounded-md border-gray-300 shadow-sm">
                             </div>
+                            
                             <div>
                                 <label class="block text-sm font-medium text-primary-dark">Ville d'origine</label>
                                 <input type="text" name="ville_origine" value="<?=$user['ville_origine'] ?? 'ville origine'?>" 
@@ -120,6 +119,15 @@
                                 <label class="block text-sm font-medium text-primary-dark">Ville actuelle</label>
                                 <input type="text" name="ville_actuelle" value="<?=$user['ville_actuelle'] ?? 'ville actuelle'?>" 
                                        class="mt-1 w-full rounded-md border-gray-300 shadow-sm">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-primary-dark">Année d'études</label>
+                                <select id="annee_etudes" name="annee_etudes" value="" required 
+                                    class="w-full p-3 border border-[#D8C4B6] rounded focus:outline-none focus:border-[#213555]">
+                                    <option value="<?=$user['annee_etudes'] ?? 'année etudes'?>"><?=$user['annee_etudes'].'année' ?? 'année etudes'?></option>
+                                    <option value="1er année">1ère année</option>
+                                    <option value="2eme année">2ème année</option>
+                                </select>
                             </div>
                             <div class="col-span-2">
                                 <label class="block text-sm font-medium text-primary-dark">Biographie</label>

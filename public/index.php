@@ -10,6 +10,7 @@ require_once '../app/controllers/HomeController.php';
 require_once '../app/controllers/AuthController.php';
 require_once '../app/controllers/AdminController.php';
 require_once '../app/controllers/HousingController.php';
+require_once '../app/controllers/ProfileController.php';
 require_once '../app/config/db.php';
 
 
@@ -38,8 +39,8 @@ Route::post('/post-housing', [HousingController::class, 'handlePostHousing']);
 // admin routes
 Route::get('/dashboard', [AdminController::class, 'showDashboard']);
 
-Route::get('/profile', [AuthController::class, 'profile']);
-Route::post('/update-profile', [AuthController::class, 'updateProfile']);
+Route::get('/profile', [ProfileController::class, 'profile']);
+Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
 
 
 // Dispatch the request
