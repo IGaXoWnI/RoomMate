@@ -69,4 +69,63 @@ class AdminController extends BaseController {
             }
         }
     }
+
+    public function showAnnonce() {
+        
+        $annonces = $this->AdminModel->getAllAnnonces();
+        
+        $totalAnnonces = count($annonces);
+        $activeAnnonces = 0;
+        $pendingAnnonces = 0;
+        
+        foreach($annonces as $annonce) {
+            if($annonce['statut'] === 'active') {
+                $activeAnnonces++;
+            } elseif($annonce['statut'] === 'inactif') {
+                $pendingAnnonces++;
+            }
+        }
+        
+        $data = [
+            'annonces' => $annonces,
+            'totalAnnonces' => $totalAnnonces,
+            'activeAnnonces' => $activeAnnonces,
+            'pendingAnnonces' => $pendingAnnonces
+        ];
+
+        $this->render('admin/annonce', $data);
+    }
+
+    public function updateAnnonceStatus() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['annonce_id']) && isset($_POST['statut'])) {
+            $annonceId = $_POST['annonce_id'];
+            $newStatus = $_POST['statut'];
+
+            $success = $this->AdminModel->updateAnnonceStatus($annonceId, $newStatus);
+            
+            if ($success) {
+                header('Location: /dashboard/annonce?success=status_updated');
+                exit;
+            } else {
+                header('Location: /dashboard/annonce?error=update_failed');
+                exit;
+            }
+        }
+    }
+
+    public function deleteAnnonce() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['annonce_id'])) {
+            $annonceId = $_POST['annonce_id'];
+            
+            $success = $this->AdminModel->deleteAnnonce($annonceId);
+            
+            if ($success) {
+                header('Location: /dashboard/annonce?success=annonce_deleted');
+                exit;
+            } else {
+                header('Location: /dashboard/annonce?error=delete_failed');
+                exit;
+            }
+        }
+    }
 }
