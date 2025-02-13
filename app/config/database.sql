@@ -11,7 +11,7 @@ CREATE TABLE Utilisateur (
     preferences TEXT,
     role enum("admin" , "youcoder"),
     photo_profil VARCHAR(255),
-    budget int 
+    budget int
 );
 
 -- INSERT INTO Utilisateur (username, email, ville_origine, role, annee_etudes) VALUES
