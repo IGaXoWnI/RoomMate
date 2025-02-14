@@ -70,4 +70,13 @@ class HousingController extends BaseController {
         $listings = $this->housingModel->getAllListings();
         $this->render('housing/index', ['listings' => $listings]);
     }
+
+    public function show($id) {
+        $listing = $this->housingModel->getListingById($id);
+        if (!$listing) {
+            header('Location: /find-housing');
+            exit;
+        }
+        $this->render('housing/show', ['listing' => $listing]);
+    }
 } 
