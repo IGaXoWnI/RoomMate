@@ -91,17 +91,66 @@
                         <div class="flex justify-between items-start mb-6">
                         
                         <?php if(isset($_SESSION['match'])): ?>
-                        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                            <span class="block sm:inline"><?= $_SESSION['match'] ?></span>
-                            <?php unset($_SESSION['match']); ?>
+                            <?php 
+                            $percentage = intval(preg_replace('/[^0-9]/', '', $_SESSION['match']));
+                            
+                            $borderColor = $percentage <= 30 ? 'border-red-500' : ($percentage <= 60 ? 'border-orange-500' : 'border-green-500');
+                            $iconColor = $percentage <= 30 ? 'text-red-500' : ($percentage <= 60 ? 'text-orange-500' : 'text-green-500');
+                            $textColor = $percentage <= 30 ? 'text-red-800' : ($percentage <= 60 ? 'text-orange-800' : 'text-green-800');
+                            $subTextColor = $percentage <= 30 ? 'text-red-600' : ($percentage <= 60 ? 'text-orange-600' : 'text-green-600');
+                            $icon = $percentage <= 30 ? 'M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z' : 
+                                   ($percentage <= 60 ? 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z' : 
+                                   'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z');
+                            ?>
+                        <div class="fixed top-24 right-4 bg-white border-l-4 <?= $borderColor ?> rounded-lg shadow-lg p-4 mb-4 transform transition-all duration-300 animate-slide-in" role="alert">
+                            <div class="flex items-center gap-3">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-6 w-6 <?= $iconColor ?>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<?= $icon ?>"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-medium <?= $textColor ?>"><?= $_SESSION['match'] ?></p>
+                                    <p class="text-sm <?= $subTextColor ?>">
+                                        <?php if($percentage <= 30): ?>
+                                            Low compatibility - You might want to keep looking
+                                        <?php elseif($percentage <= 60): ?>
+                                            Moderate match - Worth considering
+                                        <?php else: ?>
+                                            Great match - You can now message each other!
+                                        <?php endif; ?>
+                                    </p>
+                                </div>
+                                <button onclick="this.parentElement.parentElement.style.display='none'" class="ml-4 <?= $subTextColor ?> hover:<?= $textColor ?> transition-colors">
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
+                        <?php unset($_SESSION['match']); ?>
                         <?php endif; ?>
 
                         <?php if(isset($_SESSION['unmatch'])): ?>
-                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                            <span class="block sm:inline"><?= $_SESSION['unmatch'] ?></span>
-                            <?php unset($_SESSION['unmatch']); ?>
+                        <div class="fixed top-24 right-4 bg-white border-l-4 border-red-500 rounded-lg shadow-lg p-4 mb-4 transform transition-all duration-300 animate-slide-in" role="alert">
+                            <div class="flex items-center gap-3">
+                                <div class="flex-shrink-0">
+                                    <svg class="h-6 w-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-medium text-red-800"><?= $_SESSION['unmatch'] ?></p>
+                                    <p class="text-sm text-red-600">You can try matching with other listings</p>
+                                </div>
+                                <button onclick="this.parentElement.parentElement.style.display='none'" class="ml-4 text-red-600 hover:text-red-800">
+                                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
+                        <?php unset($_SESSION['unmatch']); ?>
                         <?php endif; ?>
                             <div>
                                 <h1 class="text-3xl font-bold text-primary-dark mb-2">
@@ -290,5 +339,22 @@
             if (e.key === 'ArrowRight') nextImage();
         });
     </script>
+
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-slide-in {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+    </style>
 </body>
 </html> 

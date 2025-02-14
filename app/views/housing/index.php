@@ -40,13 +40,11 @@
 
     <div class="pt-28 pb-16 px-4 max-w-7xl mx-auto">
         <div class="flex gap-8">
-            <!-- Filter Section (30%) -->
             <div class="w-[30%]">
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-28">
                     <h2 class="text-xl font-semibold text-primary-dark mb-6">Filters</h2>
                     
                     <form action="/find-housing" method="GET" class="space-y-6">
-                        <!-- Price Range -->
                         <div>
                             <label class="block text-sm font-medium text-primary-medium mb-2">Price Range</label>
                             <div class="flex gap-4 items-center">
@@ -58,7 +56,6 @@
                             </div>
                         </div>
 
-                        <!-- Capacity -->
                         <div>
                             <label class="block text-sm font-medium text-primary-medium mb-2">Capacity</label>
                             <select name="capacity" class="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-accent-light focus:ring focus:ring-accent-light/20">
@@ -70,7 +67,6 @@
                             </select>
                         </div>
 
-                        <!-- Amenities -->
                         <div>
                             <label class="block text-sm font-medium text-primary-medium mb-2">Amenities</label>
                             <div class="space-y-2">
@@ -97,14 +93,12 @@
                             </div>
                         </div>
 
-                        <!-- Availability -->
                         <div>
                             <label class="block text-sm font-medium text-primary-medium mb-2">Available From</label>
                             <input type="date" name="availability" 
                                 class="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-accent-light focus:ring focus:ring-accent-light/20">
                         </div>
 
-                        <!-- Apply Filters Button -->
                         <button type="submit" 
                             class="w-full px-6 py-3 bg-primary-dark text-white rounded-xl hover:bg-primary-medium transition-all duration-300 flex items-center justify-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -116,20 +110,16 @@
                 </div>
             </div>
 
-            <!-- Listings Section (60%) -->
             <div class="w-[60%]">
-                <!-- Centered Title Section -->
                 <div class="text-center mb-12">
                     <h1 class="text-4xl font-bold text-primary-dark mb-3">Find Your Perfect Home</h1>
                     <p class="text-primary-medium/80 text-lg">Discover amazing places to live with great roommates</p>
                 </div>
 
-                <!-- Listings Grid -->
                 <div class="space-y-8">
                     <?php foreach ($listings as $listing): ?>
                         <a href="/housing/details/<?= $listing['id'] ?>" class="block group">
                             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-lg transition-all duration-300 flex">
-                                <!-- Image Section (40%) -->
                                 <div class="w-[40%] relative overflow-hidden">
                                     <?php if (!empty($listing['main_photo'])): ?>
                                         <img 
@@ -152,7 +142,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Content Section (60%) -->
                                 <div class="w-[60%] p-8 flex flex-col">
                                     <div class="flex-1">
                                         <div class="flex items-start justify-between mb-4">
