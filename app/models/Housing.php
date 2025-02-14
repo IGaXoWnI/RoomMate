@@ -83,4 +83,20 @@ class Housing {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getListingById($id) {
+        $sql = "SELECT 
+            a.*,
+            u.nom_complet as owner_name,
+            u.username as owner_username,
+            u.email as owner_email,
+            u.ville_actuelle as owner_city
+        FROM Annonce a
+        JOIN Utilisateur u ON a.utilisateur_id = u.id
+        WHERE a.id = :id";
+
+        $stmt = $this->db->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 } 

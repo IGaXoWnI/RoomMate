@@ -35,6 +35,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/post-housing', [HousingController::class, 'showPostHousingForm']);
 Route::post('/housing/store', [HousingController::class, 'store']);
 Route::get('/find-housing', [HousingController::class, 'index']);
+Route::get('/housing/details/{id}', [HousingController::class, 'show']);
 
 
 // admin routes
