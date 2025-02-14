@@ -258,7 +258,7 @@
                                     <label class="block text-sm font-medium text-primary-medium/80 mb-2">House Rules</label>
                                     <textarea name="rules" required rows="3" 
                                         class="w-full px-4 py-3 rounded-xl border-gray-200 focus:border-accent-light focus:ring focus:ring-accent-light/20 transition-all duration-300"
-                                        placeholder="Describe your house rules..."></textarea>
+                                        placeholder="Describe your house rules separated by comma (,) ex : Interdiction de fumer, animaux, invités"></textarea>
                                 </div>
 
                                 
