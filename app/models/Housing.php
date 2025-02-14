@@ -68,6 +68,13 @@ class Housing {
         return $photos;
     }
 
+    public function getAnoncesData($id){
+        $result = $this->db->conn->prepare("select * from Annonce where id = ?");
+        $result->execute([$id]);
+        return $result->fetch(PDO::FETCH_ASSOC);
+
+    }
+    
     public function getAllListings() {
         $sql = "SELECT 
             a.*,
