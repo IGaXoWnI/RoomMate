@@ -139,65 +139,37 @@ class AuthController extends BaseController {
 
    public function handleSocialLogin() {
     try {
-        // Get JSON data from request
-        $jsonData = file_get_contents('php://input');
-        $data = json_decode($jsonData, true);
-
-        if (!$data) {
-            throw new Exception('Invalid request data');
+        $data = json_decode(file_get_contents('php://input'), true);
+        
+        if (!$data || !isset($data['firebase_uid'], $data['name'], $data['provider'])) {
+            throw new Exception('Invalid data');
         }
 
-        $firebaseUid = $data['firebase_uid'] ?? null;
-        $email = $data['email'] ?? null;
-        $name = $data['name'] ?? null;
-        $provider = $data['provider'] ?? null;
-
-        if (!$firebaseUid || !$email || !$name || !$provider) {
-            throw new Exception('Missing required fields');
-        }
-
-        // Check if user exists
-        $existingUser = $this->UserModel->getUserByEmail($email);
+        $existingUser = $data['email'] ? $this->UserModel->getUserByEmail($data['email']) : null;
         
         if ($existingUser) {
-            // Update existing user with Firebase UID if needed
             if (empty($existingUser['firebase_uid'])) {
-                $this->UserModel->updateFirebaseUid($existingUser['id'], $firebaseUid);
+                $this->UserModel->updateFirebaseUid($existingUser['id'], $data['firebase_uid']);
             }
             $userId = $existingUser['id'];
         } else {
-            // Create new user
             $userData = [
-                'username' => $name,
-                'email' => $email,
-                'firebase_uid' => $firebaseUid,
+                'username' => $data['name'],
+                'email' => $data['email'] ?? '',
+                'firebase_uid' => $data['firebase_uid'],
                 'role' => 'youcoder'
             ];
             $userId = $this->UserModel->createSocialUser($userData);
         }
 
-        // Set session variables
         $_SESSION['user_id'] = $userId;
         $_SESSION['user_role'] = 'youcoder';
-        $_SESSION['username'] = $name;
+        $_SESSION['username'] = $data['name'];
 
-        // Send success response
-        header('Content-Type: application/json');
         echo json_encode(['success' => true]);
-        exit;
-
     } catch (Exception $e) {
-        // Log error
-        error_log('Social login error: ' . $e->getMessage());
-        
-        // Send error response
-        header('Content-Type: application/json');
         http_response_code(500);
-        echo json_encode([
-            'success' => false,
-            'message' => $e->getMessage()
-        ]);
-        exit;
+        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
     }
 }
 

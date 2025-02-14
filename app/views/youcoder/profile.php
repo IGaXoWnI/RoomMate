@@ -52,7 +52,7 @@
                         </div>
                         <div class="bg-accent-light/20 p-4 rounded-lg">
                             <h3 class="font-semibold text-primary-dark">Ville actuelle</h3>
-                            <p><?=$user['ville_actuelle'] ?? 'Ex: Nador'?></p>
+                            <p><?=$user['ville_actuelle'] ?? 'Ajouter votre cité'?></p>
                         </div>
                     </div>
                     <div class="space-y-4">
@@ -62,7 +62,7 @@
                         </div>
                         <div class="bg-accent-light/20 p-4 rounded-lg">
                             <h3 class="font-semibold text-primary-dark">Ville d'origine</h3>
-                            <p><?=$user['ville_origine'] ?? 'Ex: Nador'?></p>
+                            <p><?=$user['ville_origine'] ?? 'Ajouter votre cité'?></p>
                         </div>
                     </div>
                 </div>
@@ -132,12 +132,12 @@
                             <div class="col-span-2">
                                 <label class="block text-sm font-medium text-primary-dark">Biographie</label>
                                 <textarea name="biographie" rows="3" 
-                                          class="mt-1 w-full rounded-md border-gray-300 shadow-sm"><?=$user['biographie'] ?? 'Bio'?></textarea>
+                                          class="mt-1 w-full rounded-md border-gray-300 shadow-sm"><?=$user['biographie'] ?? 'Describe Your Self'?></textarea>
                             </div>
                             <div class="col-span-2">
                                 <label class="block text-sm font-medium text-primary-dark">Préférences</label>
                                 <textarea name="preferences" rows="3" 
-                                          class="mt-1 w-full rounded-md border-gray-300 shadow-sm"><?=$user['preferences'] ?? 'preferences'?></textarea>
+                                          class="mt-1 w-full rounded-md border-gray-300 shadow-sm"><?=$user['preferences'] ?? 'preferences separer par comma (,) ex : fumeur, animaux, invités'?></textarea>
                             </div>
                         </div>
                         <div class="mt-6 flex justify-end space-x-3">

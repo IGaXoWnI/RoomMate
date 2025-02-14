@@ -50,6 +50,8 @@ Route::post('/dashboard/delete-annonce', [AdminController::class, 'deleteAnnonce
 
 Route::get('/profile', [ProfileController::class, 'profile']);
 Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
+Route::get('/match', [HousingController::class, 'Match']);
+
 
 
 // Dispatch the request
