@@ -19,6 +19,8 @@
             }
         }
     </script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <title>Housing Details - RoomMate</title>
 </head>
 <body class="bg-gradient-to-br from-background to-accent-light/10 min-h-screen">
@@ -179,7 +181,7 @@
 
     <div class="max-w-7xl mx-auto mt-8">
         <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-8">
-            <div class="flex items-start justify-between">
+            <div class="flex items-start justify-between mb-8">
                 <div class="flex items-center gap-6">
                     <div class="w-16 h-16 bg-primary-dark/10 rounded-full flex items-center justify-center">
                         <span class="text-primary-dark font-semibold text-2xl">
@@ -226,7 +228,12 @@
                 </div>
             </div>
 
-            <div class="mt-8 p-4 bg-accent-light/5 rounded-lg border border-accent-light/10">
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-primary-dark mb-4">Location</h3>
+                <div id="map" class="h-[300px] w-full rounded-lg border border-accent-light/10"></div>
+            </div>
+
+            <div class="p-4 bg-accent-light/5 rounded-lg border border-accent-light/10">
                 <h4 class="text-primary-dark font-medium mb-3 flex items-center gap-2">
                     <svg class="w-5 h-5 text-accent-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -289,6 +296,60 @@
             if (e.key === 'ArrowLeft') previousImage();
             if (e.key === 'ArrowRight') nextImage();
         });
+
+
+        const map = L.map('map');
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        async function showLocationOnMap(location) {
+            try {
+                const [address, neighborhood, city] = location.split(',').map(item => item.trim());
+                
+                const searchQuery = `${address}, ${city}, Morocco`;
+                
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchQuery)}&country=Morocco&city=${encodeURIComponent(city)}`);
+                const data = await response.json();
+                
+                if (data && data.length > 0) {
+                    const lat = parseFloat(data[0].lat);
+                    const lon = parseFloat(data[0].lon);
+                    
+                    map.setView([lat, lon], 16);
+                    
+                    L.marker([lat, lon])
+                        .addTo(map)
+                        .bindPopup(`
+                            <strong>${address}</strong><br>
+                            ${neighborhood}<br>
+                            ${city}
+                        `);
+                } else {
+                    const cityResponse = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)},Morocco`);
+                    const cityData = await cityResponse.json();
+                    
+                    if (cityData && cityData.length > 0) {
+                        const lat = parseFloat(cityData[0].lat);
+                        const lon = parseFloat(cityData[0].lon);
+                        
+                        map.setView([lat, lon], 13);
+                        
+                        L.marker([lat, lon])
+                            .addTo(map)
+                            .bindPopup(`
+                                <strong>${address}</strong><br>
+                                ${neighborhood}<br>
+                                ${city}
+                            `);
+                    }
+                }
+            } catch (error) {
+                console.error('Error geocoding address:', error);
+            }
+        }
+
+        showLocationOnMap("<?= htmlspecialchars($listing['localisation']) ?>");
     </script>
 </body>
 </html> 
