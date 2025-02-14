@@ -60,7 +60,7 @@ class HousingController extends BaseController {
             } else {
                 throw new Exception("Failed to insert data");
             }
-
+            
         } catch (Exception $e) {
             $_SESSION['error'] = "Erreur lors de la publication: " . $e->getMessage();
             header('Location: /post-housing');

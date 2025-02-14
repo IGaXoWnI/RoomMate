@@ -137,7 +137,41 @@ class AuthController extends BaseController {
 
    }
 
+   public function handleSocialLogin() {
+    try {
+        $data = json_decode(file_get_contents('php://input'), true);
+        
+        if (!$data || !isset($data['firebase_uid'], $data['name'], $data['provider'])) {
+            throw new Exception('Invalid data');
+        }
 
+        $existingUser = $data['email'] ? $this->UserModel->getUserByEmail($data['email']) : null;
+        
+        if ($existingUser) {
+            if (empty($existingUser['firebase_uid'])) {
+                $this->UserModel->updateFirebaseUid($existingUser['id'], $data['firebase_uid']);
+            }
+            $userId = $existingUser['id'];
+        } else {
+            $userData = [
+                'username' => $data['name'],
+                'email' => $data['email'] ?? '',
+                'firebase_uid' => $data['firebase_uid'],
+                'role' => 'youcoder'
+            ];
+            $userId = $this->UserModel->createSocialUser($userData);
+        }
+
+        $_SESSION['user_id'] = $userId;
+        $_SESSION['user_role'] = 'youcoder';
+        $_SESSION['username'] = $data['name'];
+
+        echo json_encode(['success' => true]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['success' => false, 'message' => $e->getMessage()]);
+    }
+}
 
    public function logout() {
          if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
