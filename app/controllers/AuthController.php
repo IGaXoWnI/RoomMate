@@ -137,7 +137,69 @@ class AuthController extends BaseController {
 
    }
 
+   public function handleSocialLogin() {
+    try {
+        // Get JSON data from request
+        $jsonData = file_get_contents('php://input');
+        $data = json_decode($jsonData, true);
 
+        if (!$data) {
+            throw new Exception('Invalid request data');
+        }
+
+        $firebaseUid = $data['firebase_uid'] ?? null;
+        $email = $data['email'] ?? null;
+        $name = $data['name'] ?? null;
+        $provider = $data['provider'] ?? null;
+
+        if (!$firebaseUid || !$email || !$name || !$provider) {
+            throw new Exception('Missing required fields');
+        }
+
+        // Check if user exists
+        $existingUser = $this->UserModel->getUserByEmail($email);
+        
+        if ($existingUser) {
+            // Update existing user with Firebase UID if needed
+            if (empty($existingUser['firebase_uid'])) {
+                $this->UserModel->updateFirebaseUid($existingUser['id'], $firebaseUid);
+            }
+            $userId = $existingUser['id'];
+        } else {
+            // Create new user
+            $userData = [
+                'username' => $name,
+                'email' => $email,
+                'firebase_uid' => $firebaseUid,
+                'role' => 'youcoder'
+            ];
+            $userId = $this->UserModel->createSocialUser($userData);
+        }
+
+        // Set session variables
+        $_SESSION['user_id'] = $userId;
+        $_SESSION['user_role'] = 'youcoder';
+        $_SESSION['username'] = $name;
+
+        // Send success response
+        header('Content-Type: application/json');
+        echo json_encode(['success' => true]);
+        exit;
+
+    } catch (Exception $e) {
+        // Log error
+        error_log('Social login error: ' . $e->getMessage());
+        
+        // Send error response
+        header('Content-Type: application/json');
+        http_response_code(500);
+        echo json_encode([
+            'success' => false,
+            'message' => $e->getMessage()
+        ]);
+        exit;
+    }
+}
 
    public function logout() {
          if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {

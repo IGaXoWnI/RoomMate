@@ -36,4 +36,26 @@ public function updateUser($data){
     return true;
 }
 
+public function getUserByEmail($email) {
+    $stmt = $this->conn->prepare("SELECT * FROM utilisateur WHERE email = ?");
+    $stmt->execute([$email]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+public function updateFirebaseUid($userId, $firebaseUid) {
+    $stmt = $this->conn->prepare("UPDATE utilisateur SET firebase_uid = ? WHERE id = ?");
+    return $stmt->execute([$firebaseUid, $userId]);
+}
+
+public function createSocialUser($userData) {
+    $stmt = $this->conn->prepare("INSERT INTO utilisateur (username, email, firebase_uid, role) VALUES (?, ?, ?, ?)");
+    $stmt->execute([
+        $userData['username'],
+        $userData['email'],
+        $userData['firebase_uid'],
+        $userData['role']
+    ]);
+    return $this->conn->lastInsertId();
+}
+
 }

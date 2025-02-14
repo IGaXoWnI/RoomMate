@@ -65,7 +65,94 @@
                     </a>
                 </p>
             </div>
+
+            <!-- Add social login buttons -->
+            <div class="flex flex-col gap-4 mt-6">
+                <button onclick="signInWithGoogle()" 
+                        class="flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                    <img src="/assets/images/google.svg" alt="Google" class="w-5 h-5">
+                    Continue with Google
+                </button>
+                
+                <button onclick="signInWithGithub()" 
+                        class="flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                    <img src="/assets/images/github.svg" alt="GitHub" class="w-5 h-5">
+                    Continue with GitHub
+                </button>
+            </div>
         </div>
     </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDBO3FXBPODN55_-OAenRe7M61si-68Dzo",
+            authDomain: "roomate-ec8df.firebaseapp.com",
+            projectId: "roomate-ec8df",
+            storageBucket: "roomate-ec8df.firebasestorage.app",
+            messagingSenderId: "732405438098",
+            appId: "1:732405438098:web:fe6f101ae4e71fad02f84b",
+            measurementId: "G-MP72NF0HYW"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Make signInWithGoogle available globally
+        window.signInWithGoogle = async function() {
+            console.log("Starting Google sign in..."); // Debug log
+            const provider = new GoogleAuthProvider();
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                console.log("Google sign in successful", user); // Debug log
+                
+                // Send user data to your PHP backend
+                await handleSocialLoginSuccess(user, 'google');
+            } catch (error) {
+                console.error("Error during Google sign in:", error);
+                alert("Failed to sign in with Google: " + error.message);
+            }
+        }
+
+        async function handleSocialLoginSuccess(user, provider) {
+            console.log("Sending data to backend...", { user, provider }); // Debug log
+            try {
+                const response = await fetch('/auth/social-login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        firebase_uid: user.uid,
+                        email: user.email,
+                        name: user.displayName,
+                        provider: provider
+                    })
+                });
+                
+                console.log("Backend response received", response); // Debug log
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log("Backend response data:", data); // Debug log
+                
+                if (data.success) {
+                    window.location.href = '/home';
+                } else {
+                    throw new Error(data.message || 'Login failed');
+                }
+            } catch (error) {
+                console.error("Error in handleSocialLoginSuccess:", error);
+                alert("Failed to complete login process: " + error.message);
+            }
+        }
+    </script>
 </body>
 </html>
