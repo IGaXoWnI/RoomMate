@@ -11,7 +11,6 @@ require_once '../app/controllers/AuthController.php';
 require_once '../app/controllers/AdminController.php';
 require_once '../app/controllers/HousingController.php';
 require_once '../app/controllers/ProfileController.php';
-require_once '../app/controllers/MatchingController.php';
 require_once '../app/config/db.php';
 
 
@@ -50,7 +49,7 @@ Route::post('/dashboard/delete-annonce', [AdminController::class, 'deleteAnnonce
 
 Route::get('/profile', [ProfileController::class, 'profile']);
 Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
-Route::get('/match', [MatchingController::class, 'Match']);
+Route::get('/match', [HousingController::class, 'Match']);
 
 
 
