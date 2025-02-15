@@ -9,15 +9,13 @@ class AdminController extends BaseController {
         $this->UserModel = new User();
         $this->AdminModel = new Admin();
     }
-
+    
     public function showDashboard(){
-        // Récupérer tous les utilisateurs
+        
         $users = $this->AdminModel->getAllUsers();
         
-        // Compter le nombre total d'utilisateurs
         $totalUsers = count($users);
         
-        // Compter les admins et youcoders
         $adminCount = 0;
         $youcoderCount = 0;
         foreach($users as $user) {
@@ -124,6 +122,55 @@ class AdminController extends BaseController {
                 exit;
             } else {
                 header('Location: /dashboard/annonce?error=delete_failed');
+                exit;
+            }
+        }
+    }
+
+    public function showSignalements() {
+        $signalements = $this->AdminModel->getAllSignalements();
+        
+        // Compter les différents types de signalements
+        $totalSignalements = count($signalements);
+        $enAttente = 0;
+        $traites = 0;
+        $rejetes = 0;
+        
+        foreach($signalements as $signalement) {
+            switch($signalement['statut']) {
+                case 'En attente':
+                    $enAttente++;
+                    break;
+                case 'Traité':
+                    $traites++;
+                    break;
+                case 'Rejeté':
+                    $rejetes++;
+                    break;
+            }
+        }
+        
+        $this->render('admin/signalements', [
+            'signalements' => $signalements,
+            'totalSignalements' => $totalSignalements,
+            'enAttente' => $enAttente,
+            'traites' => $traites,
+            'rejetes' => $rejetes
+        ]);
+    }
+
+    public function updateSignalementStatus() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signalement_id']) && isset($_POST['statut'])) {
+            $signalementId = $_POST['signalement_id'];
+            $newStatus = $_POST['statut'];
+            
+            $success = $this->AdminModel->updateSignalementStatus($signalementId, $newStatus);
+            
+            if ($success) {
+                header('Location: /dashboard/signalements?success=status_updated');
+                exit;
+            } else {
+                header('Location: /dashboard/signalements?error=update_failed');
                 exit;
             }
         }

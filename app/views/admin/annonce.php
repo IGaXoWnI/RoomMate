@@ -213,6 +213,9 @@
                                                     <option value="rejete" <?= (!empty($annonce['statut']) && $annonce['statut'] === 'rejete') ? 'selected' : '' ?>>
                                                         rejete
                                                     </option>
+                                                    <option value="bloquer" <?= (!empty($annonce['statut']) && $annonce['statut'] === 'bloquer') ? 'selected' : '' ?>>
+                                                        bloquer
+                                                    </option>
                                                 </select>
                                             </form>
                                         </div>

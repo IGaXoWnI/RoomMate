@@ -14,7 +14,6 @@
 
       <?php include __DIR__ . "/../partials/sidebar.php" ?>
 
-
       <button id="toggle-sidebar"
         class='lg:hidden w-8 h-8 z-[100] fixed top-[36px] left-[10px] cursor-pointer bg-[#007bff] flex items-center justify-center rounded-full outline-none transition-all duration-500'>
         <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" class="w-3 h-3" viewBox="0 0 55.752 55.752">

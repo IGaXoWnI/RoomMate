@@ -43,7 +43,8 @@ Route::post('/dashboard/update-role', [AdminController::class, 'updateRole']);
 Route::post('/dashboard/delete-user', [AdminController::class, 'deleteUser']);
 Route::post('/dashboard/update-annonce', [AdminController::class, 'updateAnnonceStatus']);
 Route::post('/dashboard/delete-annonce', [AdminController::class, 'deleteAnnonce']);
-
+Route::get('/dashboard/signalements', [AdminController::class, 'showSignalements']);
+Route::post('/admin/update-signalement', [AdminController::class, 'updateSignalementStatus']);
 
 Route::get('/profile', [ProfileController::class, 'profile']);
 Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
