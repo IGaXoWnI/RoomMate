@@ -35,6 +35,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/post-housing', [HousingController::class, 'showPostHousingForm']);
 Route::post('/housing/store', [HousingController::class, 'store']);
 Route::get('/find-housing', [HousingController::class, 'index']);
+Route::get('/api/listning', [HousingController::class, 'getAllListnings']);
 Route::get('/housing/details/{id}', [HousingController::class, 'show']);
 Route::post('/auth/social-login', [AuthController::class, 'handleSocialLogin']);
 

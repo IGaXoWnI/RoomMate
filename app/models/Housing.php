@@ -75,22 +75,38 @@ class Housing {
 
     }
     
-    public function getAllListings() {
-        $sql = "SELECT 
-            a.*,
-            u.nom_complet as owner_name,
-            u.username as owner_username,
-            u.email as owner_email,
-            SUBSTRING_INDEX(a.galerie_photos, ',', 1) as main_photo
-        FROM Annonce a
-        JOIN Utilisateur u ON a.utilisateur_id = u.id
-        ORDER BY a.id DESC";
-
-        $stmt = $this->db->conn->prepare($sql);
-        $stmt->execute();
+    public function getAllListings($search = "") {
+        if ($search) {
+            $sql = "SELECT 
+                a.*, 
+                u.nom_complet as owner_name, 
+                u.username as owner_username, 
+                u.email as owner_email, 
+                SUBSTRING_INDEX(a.galerie_photos, ',', 1) as main_photo 
+            FROM Annonce a 
+            JOIN Utilisateur u ON a.utilisateur_id = u.id 
+            WHERE a.localisation LIKE :search OR u.nom_complet LIKE :search
+            ORDER BY a.id DESC";
+    
+            $stmt = $this->db->conn->prepare($sql);
+            $stmt->execute(['search' => "%$search%"]);
+        } else {
+            $sql = "SELECT 
+                a.*, 
+                u.nom_complet as owner_name, 
+                u.username as owner_username, 
+                u.email as owner_email, 
+                SUBSTRING_INDEX(a.galerie_photos, ',', 1) as main_photo 
+            FROM Annonce a 
+            JOIN Utilisateur u ON a.utilisateur_id = u.id 
+            ORDER BY a.id DESC";
+    
+            $stmt = $this->db->conn->query($sql);
+        }
+    
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    
     public function getListingById($id) {
         $sql = "SELECT 
             a.*,

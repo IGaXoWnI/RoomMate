@@ -68,9 +68,20 @@ class HousingController extends BaseController {
         }
     }
 
+    public function getAllListnings(){
+
+        
+
+        $search = isset($_GET["search"]) ? $_GET["search"] : "";
+        $listings = $this->housingModel->getAllListings($search);
+        //$this->render('housing/index', ['listings' => $listings]);
+        echo json_encode($listings);
+    }
+
     public function index() {
-        $listings = $this->housingModel->getAllListings();
-        $this->render('housing/index', ['listings' => $listings]);
+        // $listings = $this->housingModel->getAllListings();
+        $this->render('housing/index');
+        //echo json_encode($listing);
     }
 
     public function show($id) {
