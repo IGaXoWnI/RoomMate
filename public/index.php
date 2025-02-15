@@ -34,6 +34,9 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/post-housing', [HousingController::class, 'showPostHousingForm']);
 Route::post('/housing/store', [HousingController::class, 'store']);
+Route::get('/find-housing', [HousingController::class, 'index']);
+Route::get('/housing/details/{id}', [HousingController::class, 'show']);
+Route::post('/auth/social-login', [AuthController::class, 'handleSocialLogin']);
 
 
 // admin routes
@@ -48,6 +51,8 @@ Route::post('/admin/update-signalement', [AdminController::class, 'updateSignale
 
 Route::get('/profile', [ProfileController::class, 'profile']);
 Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
+Route::get('/match', [HousingController::class, 'Match']);
+
 
 
 // Dispatch the request

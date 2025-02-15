@@ -11,14 +11,9 @@ CREATE TABLE Utilisateur (
     preferences TEXT,
     role enum("admin" , "youcoder"),
     photo_profil VARCHAR(255),
+    budget int
 );
 
--- INSERT INTO Utilisateur (username, email, ville_origine, role, annee_etudes) VALUES
--- ('ali_tech', 'ali@example.com', 'Casablanca', 'youcoder', 2),
--- ('sara_dev', 'sara@example.com', 'Marrakech', 'admin', 3),
--- ('youssef_code', 'youssef@example.com', 'Rabat', 'youcoder', 1),
--- ('fatima_web', 'fatima@example.com', 'Fès', 'admin', 4),
--- ('omar_prog', 'omar@example.com', 'Tanger', 'youcoder', 2);
 
 
 CREATE TABLE Annonce (
