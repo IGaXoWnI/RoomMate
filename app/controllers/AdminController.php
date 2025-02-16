@@ -5,9 +5,15 @@ require_once (__DIR__.'/../models/Admin.php');
 class AdminController extends BaseController {
     private $UserModel;
     private $AdminModel;
+    
     public function __construct(){
         $this->UserModel = new User();
         $this->AdminModel = new Admin();
+    
+        if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+            header('Location: /login');
+            exit;
+        }
     }
     
     public function showDashboard(){

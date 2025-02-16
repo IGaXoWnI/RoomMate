@@ -118,11 +118,11 @@ class AuthController extends BaseController {
               $user = $this->UserModel->login($userData);
              if($user){
                 $_SESSION['user_id'] = $user["id"];
-                $_SESSION['user_role'] = $user['role'] ; 
+                $_SESSION['user_role'] = $user['role']; 
                 $_SESSION['username'] = $user['username'];
 
                 if ($user['role'] === 'admin') {
-                    header('Location: /admin/dashboard.php');
+                    header('Location: /dashboard');
                 } else if ($user['role'] === 'youcoder') {
                     header('Location: /home');
                 }
