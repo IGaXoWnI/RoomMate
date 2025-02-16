@@ -35,6 +35,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/post-housing', [HousingController::class, 'showPostHousingForm']);
 Route::post('/housing/store', [HousingController::class, 'store']);
 Route::get('/find-housing', [HousingController::class, 'index']);
+Route::get('/api/listning', [HousingController::class, 'getAllListnings']);
 Route::get('/housing/details/{id}', [HousingController::class, 'show']);
 Route::post('/auth/social-login', [AuthController::class, 'handleSocialLogin']);
 
@@ -46,7 +47,8 @@ Route::post('/dashboard/update-role', [AdminController::class, 'updateRole']);
 Route::post('/dashboard/delete-user', [AdminController::class, 'deleteUser']);
 Route::post('/dashboard/update-annonce', [AdminController::class, 'updateAnnonceStatus']);
 Route::post('/dashboard/delete-annonce', [AdminController::class, 'deleteAnnonce']);
-
+Route::get('/dashboard/signalements', [AdminController::class, 'showSignalements']);
+Route::post('/admin/update-signalement', [AdminController::class, 'updateSignalementStatus']);
 
 Route::get('/profile', [ProfileController::class, 'profile']);
 Route::post('/update-profile', [ProfileController::class, 'updateProfile']);

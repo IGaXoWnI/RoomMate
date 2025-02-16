@@ -58,4 +58,26 @@ class Admin extends Db {
         return $stmt->execute([':id' => $annonceId]);
     }
 
+    public function getAllSignalements() {
+        $sql = "SELECT s.*, a.localisation, a.loyer, a.capacite, a.statut as annonce_statut, 
+                u.username as signaleur_username, u2.username as annonceur_username 
+                FROM Signalement s
+                LEFT JOIN Annonce a ON s.annonce_id = a.id
+                LEFT JOIN Utilisateur u ON s.utilisateur_id = u.id
+                LEFT JOIN Utilisateur u2 ON a.utilisateur_id = u2.id
+                ORDER BY s.id DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function updateSignalementStatus($signalementId, $status) {
+        $sql = "UPDATE Signalement SET statut = :statut WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([
+            ':statut' => $status,
+            ':id' => $signalementId
+        ]);
+    }
+
 }

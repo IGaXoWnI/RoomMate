@@ -75,22 +75,38 @@ class Housing {
 
     }
     
-    public function getAllListings() {
-        $sql = "SELECT 
-            a.*,
-            u.nom_complet as owner_name,
-            u.username as owner_username,
-            u.email as owner_email,
-            SUBSTRING_INDEX(a.galerie_photos, ',', 1) as main_photo
-        FROM Annonce a
-        JOIN Utilisateur u ON a.utilisateur_id = u.id
-        ORDER BY a.id DESC";
-
-        $stmt = $this->db->conn->prepare($sql);
-        $stmt->execute();
+    public function getAllListings($search = "") {
+        if ($search) {
+            $sql = "SELECT 
+                a.*, 
+                u.nom_complet as owner_name, 
+                u.username as owner_username, 
+                u.email as owner_email, 
+                SUBSTRING_INDEX(a.galerie_photos, ',', 1) as main_photo 
+            FROM Annonce a 
+            JOIN Utilisateur u ON a.utilisateur_id = u.id 
+            WHERE a.localisation LIKE :search OR u.nom_complet LIKE :search
+            ORDER BY a.id DESC";
+    
+            $stmt = $this->db->conn->prepare($sql);
+            $stmt->execute(['search' => "%$search%"]);
+        } else {
+            $sql = "SELECT 
+                a.*, 
+                u.nom_complet as owner_name, 
+                u.username as owner_username, 
+                u.email as owner_email, 
+                SUBSTRING_INDEX(a.galerie_photos, ',', 1) as main_photo 
+            FROM Annonce a 
+            JOIN Utilisateur u ON a.utilisateur_id = u.id 
+            ORDER BY a.id DESC";
+    
+            $stmt = $this->db->conn->query($sql);
+        }
+    
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    
     public function getListingById($id) {
         $sql = "SELECT 
             a.*,
@@ -105,5 +121,60 @@ class Housing {
         $stmt = $this->db->conn->prepare($sql);
         $stmt->execute(['id' => $id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getFilteredListings($filters) {
+        try {
+            $sql = "SELECT a.*, 
+                           u.nom_complet as owner_name, 
+                           u.email as owner_email,
+                           SUBSTRING_INDEX(a.galerie_photos, ',', 1) as main_photo 
+                    FROM Annonce a 
+                    JOIN Utilisateur u ON a.utilisateur_id = u.id 
+                    WHERE 1=1";
+            
+            $params = [];
+
+            if (!empty($filters['search'])) {
+                $sql .= " AND a.localisation LIKE ?";
+                $params[] = "%{$filters['search']}%";
+            }
+
+            if (!empty($filters['min_price'])) {
+                $sql .= " AND a.loyer >= ?";
+                $params[] = $filters['min_price'];
+            }
+
+            if (!empty($filters['max_price'])) {
+                $sql .= " AND a.loyer <= ?";
+                $params[] = $filters['max_price'];
+            }
+
+            if (!empty($filters['capacity'])) {
+                if ($filters['capacity'] === '4+') {
+                    $sql .= " AND a.capacite >= 4";
+                } else {
+                    $sql .= " AND a.capacite = ?";
+                    $params[] = $filters['capacity'];
+                }
+            }
+
+            if (!empty($filters['amenities'])) {
+                foreach ($filters['amenities'] as $amenity) {
+                    $sql .= " AND a.equipements LIKE ?";
+                    $params[] = "%$amenity%";
+                }
+            }
+
+            $sql .= " ORDER BY a.id DESC";
+
+            $stmt = $this->db->conn->prepare($sql);
+            $stmt->execute($params);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+        } catch (PDOException $e) {
+            error_log("Database Error: " . $e->getMessage());
+            return [];
+        }
     }
 } 

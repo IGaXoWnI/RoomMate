@@ -46,7 +46,7 @@
                 </li>
 
                 <li>
-                  <a href="/dashboard/sujet"
+                  <a href="/dashboard/signalements"
                     class="flex items-center gap-3 px-4 py-3 text-white/70 hover:text-white rounded-lg hover:bg-white/10 transition-all group relative">
                     <div class="w-2 h-2 rounded-full bg-white absolute -left-1 opacity-0 group-hover:opacity-100 transition-all"></div>
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
