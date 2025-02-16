@@ -30,6 +30,9 @@
                 
                  <?php if(isset($_SESSION['user_id'])): ?>
                 <div class="flex items-center space-x-4">
+                    <a href="/chat" class="text-white hover:text-accent-light px-3 py-2 text-sm font-medium transition duration-150 ease-in-out">
+                        Chat
+                    </a>    
                     <a href="/profile" class="text-white hover:text-accent-light px-3 py-2 text-sm font-medium transition duration-150 ease-in-out">
                         Profile
                     </a>    
