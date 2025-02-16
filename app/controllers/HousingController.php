@@ -23,9 +23,7 @@ class HousingController extends BaseController {
     }
 
     public function store() {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            return;
-        }
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') return;
 
         try {
             $data = [
@@ -56,7 +54,6 @@ class HousingController extends BaseController {
             if ($this->housingModel->create($data, $photos)) {
                 $_SESSION['success'] = "Annonce publiée avec succès!";
                 header('Location: /home');
-                exit;
             } else {
                 throw new Exception("Failed to insert data");
             }
@@ -64,30 +61,32 @@ class HousingController extends BaseController {
         } catch (Exception $e) {
             $_SESSION['error'] = "Erreur lors de la publication: " . $e->getMessage();
             header('Location: /post-housing');
-            exit;
         }
+        exit;
     }
 
-    public function getAllListnings(){
+    public function getAllListnings() {
+        $filters = [
+            'search' => $_GET['search'] ?? '',
+            'min_price' => $_GET['min_price'] ?? null,
+            'max_price' => $_GET['max_price'] ?? null,
+            'capacity' => $_GET['capacity'] ?? null,
+            'amenities' => $_GET['amenities'] ?? []
+        ];
 
-        
-
-        $search = isset($_GET["search"]) ? $_GET["search"] : "";
-        $listings = $this->housingModel->getAllListings($search);
-        //$this->render('housing/index', ['listings' => $listings]);
+        $listings = $this->housingModel->getFilteredListings($filters);
         echo json_encode($listings);
     }
 
     public function index() {
-        // $listings = $this->housingModel->getAllListings();
         $this->render('housing/index');
-        //echo json_encode($listing);
     }
 
     public function show($id) {
         $listing = $this->housingModel->getListingById($id);
         if (!$listing) {
             header('Location: /find-housing');
+            exit;
         }
         $this->Match($id);
         $this->render('housing/show', ['listing' => $listing]);

@@ -46,21 +46,21 @@
                 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-28">
                     <h2 class="text-xl font-semibold text-primary-dark mb-6">Filters</h2>
                     
-                    <form action="/find-housing" method="GET" class="space-y-6">
+                    <form method="GET" action="/find-housing" id="filterForm" class="space-y-6">
                         <div>
                             <label class="block text-sm font-medium text-primary-medium mb-2">Price Range</label>
                             <div class="flex gap-4 items-center">
                                 <input type="number" name="min_price" placeholder="Min" 
-                                    class="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-accent-light focus:ring focus:ring-accent-light/20">
+                                    class="w-full px-4 py-2 rounded-xl border-gray-200">
                                 <span class="text-gray-400">-</span>
                                 <input type="number" name="max_price" placeholder="Max" 
-                                    class="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-accent-light focus:ring focus:ring-accent-light/20">
+                                    class="w-full px-4 py-2 rounded-xl border-gray-200">
                             </div>
                         </div>
 
                         <div>
                             <label class="block text-sm font-medium text-primary-medium mb-2">Capacity</label>
-                            <select name="capacity" class="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-accent-light focus:ring focus:ring-accent-light/20">
+                            <select name="capacity" class="w-full px-4 py-2 rounded-xl border-gray-200">
                                 <option value="">Any</option>
                                 <option value="1">1 Person</option>
                                 <option value="2">2 People</option>
@@ -73,39 +73,25 @@
                             <label class="block text-sm font-medium text-primary-medium mb-2">Amenities</label>
                             <div class="space-y-2">
                                 <label class="flex items-center gap-2">
-                                    <input type="checkbox" name="amenities[]" value="wifi" 
-                                        class="rounded text-accent-light focus:ring-accent-light">
+                                    <input type="checkbox" name="amenities[]" value="wifi" class="rounded text-accent-light">
                                     <span class="text-primary-medium/80">WiFi</span>
                                 </label>
                                 <label class="flex items-center gap-2">
-                                    <input type="checkbox" name="amenities[]" value="washing_machine" 
-                                        class="rounded text-accent-light focus:ring-accent-light">
+                                    <input type="checkbox" name="amenities[]" value="washing_machine" class="rounded text-accent-light">
                                     <span class="text-primary-medium/80">Washing Machine</span>
                                 </label>
                                 <label class="flex items-center gap-2">
-                                    <input type="checkbox" name="amenities[]" value="kitchen" 
-                                        class="rounded text-accent-light focus:ring-accent-light">
+                                    <input type="checkbox" name="amenities[]" value="kitchen" class="rounded text-accent-light">
                                     <span class="text-primary-medium/80">Kitchen</span>
                                 </label>
                                 <label class="flex items-center gap-2">
-                                    <input type="checkbox" name="amenities[]" value="parking" 
-                                        class="rounded text-accent-light focus:ring-accent-light">
+                                    <input type="checkbox" name="amenities[]" value="parking" class="rounded text-accent-light">
                                     <span class="text-primary-medium/80">Parking</span>
                                 </label>
                             </div>
                         </div>
 
-                        <div>
-                            <label class="block text-sm font-medium text-primary-medium mb-2">Available From</label>
-                            <input type="date" name="availability" 
-                                class="w-full px-4 py-2 rounded-xl border-gray-200 focus:border-accent-light focus:ring focus:ring-accent-light/20">
-                        </div>
-
-                        <button type="submit" 
-                            class="w-full px-6 py-3 bg-primary-dark text-white rounded-xl hover:bg-primary-medium transition-all duration-300 flex items-center justify-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
-                            </svg>
+                        <button type="submit" class="w-full px-6 py-3 bg-primary-dark text-white rounded-xl">
                             Apply Filters
                         </button>
                     </form>
@@ -129,15 +115,18 @@
                     </svg>
                 </div>
 
-         
-
-
                 <div id="listingsList" class="space-y-8">
-                    
+                    <?php if (isset($listings) && !empty($listings)): ?>
+                        <?php foreach ($listings as $listing): ?>
+                            <div class="listing-card">
+                                <h3><?php echo htmlspecialchars($listing['localisation']); ?></h3>
+                                <p><?php echo htmlspecialchars($listing['loyer']); ?> DH</p>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>No listings found matching your criteria.</p>
+                    <?php endif; ?>
                 </div>
-
-
-
             </div>
         </div>
     </div>
@@ -151,9 +140,7 @@
         }
     </style>
 
-
     <script> 
-
         const searchAnnocne = document.getElementById("searchAnnocne");
         
         function displayAnnonce(listings){
@@ -229,31 +216,66 @@
                     </div>
                 </a>
             `).join('');
-            }   
+        }   
 
+        const filterForm = document.getElementById('filterForm');
+        const searchInput = document.getElementById('searchAnnocne');
 
-
-        async function searchListning(query = ''){
-
+        async function searchListings() {
             try {
-
-                const response = await axios.get(`/api/listning?search=${query}`);
+                const formData = new FormData(filterForm);
+                formData.append('search', searchInput.value);
+                const params = new URLSearchParams(formData);
+                const response = await axios.get(`/api/listning?${params}`);
                 displayAnnonce(response.data);
-                console.log(response.data);
-
-            }catch(erreur){
-                console.log(erreur);
+            } catch (error) {
+                console.error('Error:', error);
             }
-
         }
 
-        searchListning();
-        searchAnnocne.addEventListener("input" , (e)=> {
-            searchListning(e.target.value);
+        filterForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await searchListings();
         });
-        
-        
 
+        searchInput.addEventListener('input', async (e) => {
+            await searchListings();
+        });
+
+        searchListings();
+    </script>
+
+    <script>
+        const filterForm = document.querySelector('form');
+        
+        filterForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(filterForm);
+            const params = new URLSearchParams(formData);
+            
+            try {
+                const response = await fetch(`/find-housing?${params}`);
+                const data = await response.json();
+                updateListings(data);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        function updateListings(listings) {
+            const container = document.querySelector('.listings-container');
+            container.innerHTML = '';
+            
+            listings.forEach(listing => {
+                container.innerHTML += `
+                    <div class="listing-card">
+                        <h3>${listing.localisation}</h3>
+                        <p>${listing.loyer} DH</p>
+                    </div>
+                `;
+            });
+        }
     </script>
 </body>
 </html> 
