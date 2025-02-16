@@ -11,14 +11,13 @@ require_once '../app/controllers/AuthController.php';
 require_once '../app/controllers/AdminController.php';
 require_once '../app/controllers/HousingController.php';
 require_once '../app/controllers/ProfileController.php';
+require_once '../app/controllers/ReportController.php';
 require_once '../app/config/db.php';
 
 
 
 $router = new Router();
 Route::setRouter($router);
-
-
 
 Route::get('/home' , [HomeController::class , "showHome"]);
 
@@ -53,6 +52,11 @@ Route::post('/admin/update-signalement', [AdminController::class, 'updateSignale
 Route::get('/profile', [ProfileController::class, 'profile']);
 Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
 Route::get('/match', [HousingController::class, 'Match']);
+
+// Routes pour les signalements
+Route::post('/report', [ReportController::class, 'store']);
+Route::get('/admin/reports', [ReportController::class, 'index']);
+Route::post('/admin/report/status', [ReportController::class, 'updateStatus']);
 
 
 

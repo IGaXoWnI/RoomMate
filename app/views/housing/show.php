@@ -166,10 +166,12 @@
                                 <button class="px-4 py-2 bg-primary-dark text-white text-sm rounded-lg hover:bg-primary-medium transition-all duration-300">
                                     Share
                                 </button>
-                                <button class="p-2 text-primary-dark hover:text-accent-light transition-colors duration-300">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                <button onclick="openReportModal()" 
+                                        class="px-4 py-2 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600 transition-all duration-300 flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                                     </svg>
+                                    Signaler
                                 </button>
                             </div>
                         </div>
@@ -262,12 +264,13 @@
                 </div>
 
                 <div class="flex gap-3">
-                    <button class="px-6 py-3 bg-primary-dark text-white rounded-lg hover:bg-primary-medium transition-all duration-300 flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                        </svg>
-                        Message Owner
-                    </button>
+                <button onclick="window.location.href='/chat?user=<?= $listing['utilisateur_id'] ?>'" 
+                        class="px-6 py-3 bg-primary-dark text-white rounded-lg hover:bg-primary-medium transition-all duration-300 flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                    </svg>
+                    Message Owner
+                </button>
                     <button class="px-6 py-3 bg-accent-light/10 text-primary-dark rounded-lg hover:bg-accent-light/20 transition-all duration-300 flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
@@ -316,6 +319,46 @@
                     </li>
                 </ul>
             </div>
+        </div>
+    </div>
+
+    <div id="reportModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+            <h3 class="text-xl font-semibold text-primary-dark mb-4">Signaler cette annonce</h3>
+            
+            <form action="/report" method="POST">
+                <input type="hidden" name="annonce_id" value="<?= $listing['id'] ?>">
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Motif du signalement</label>
+                    <select name="motif" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-dark">
+                        <option value="">Sélectionnez un motif</option>
+                        <option value="Contenu inapproprié">Contenu inapproprié</option>
+                        <option value="Arnaque">Arnaque potentielle</option>
+                        <option value="Fausses informations">Fausses informations</option>
+                        <option value="Autre">Autre</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                    <textarea name="description" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-primary-dark"
+                        rows="4"
+                        placeholder="Décrivez le problème..."></textarea>
+                </div>
+                
+                <div class="flex justify-end gap-3">
+                    <button type="button" onclick="closeReportModal()" 
+                        class="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
+                        Annuler
+                    </button>
+                    <button type="submit" 
+                        class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all duration-300">
+                        Envoyer le signalement
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -399,6 +442,16 @@
         }
 
         showLocationOnMap("<?= htmlspecialchars($listing['localisation']) ?>");
+
+        function openReportModal() {
+            document.getElementById('reportModal').classList.remove('hidden');
+            document.getElementById('reportModal').classList.add('flex');
+        }
+
+        function closeReportModal() {
+            document.getElementById('reportModal').classList.add('hidden');
+            document.getElementById('reportModal').classList.remove('flex');
+        }
     </script>
 
     <style>
