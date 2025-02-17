@@ -38,25 +38,6 @@ CREATE TABLE Annonce (
 -- ('Jai un Logement', 10, 'Tanger', 3200, 2, 'Jardin, Terrasse', 'Pas d’animaux', 'photo5.jpg,photo6.jpg', '2025-03-10');
 
 
-CREATE TABLE Recherche (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    utilisateur_id INT,
-    zone_geographique VARCHAR(255),
-    budget FLOAT,
-    date_emmenagement DATE,
-    preferences TEXT,
-    type_recherche ENUM('rejoindre', 'chercher ensemble'),
-    FOREIGN KEY (utilisateur_id) REFERENCES Utilisateur(id)
-);
-
-CREATE TABLE Matching (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    utilisateur1_id INT,
-    utilisateur2_id INT,
-    score_compatibilite FLOAT,
-    FOREIGN KEY (utilisateur1_id) REFERENCES Utilisateur(id),
-    FOREIGN KEY (utilisateur2_id) REFERENCES Utilisateur(id)
-);
 
 CREATE TABLE Message (
     id INT PRIMARY KEY AUTO_INCREMENT,
