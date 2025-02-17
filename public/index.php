@@ -11,14 +11,14 @@ require_once '../app/controllers/AuthController.php';
 require_once '../app/controllers/AdminController.php';
 require_once '../app/controllers/HousingController.php';
 require_once '../app/controllers/ProfileController.php';
+require_once '../app/controllers/ReportController.php';
+require_once '../app/controllers/MessageController.php';
 require_once '../app/config/db.php';
 
 
 
 $router = new Router();
 Route::setRouter($router);
-
-
 
 Route::get('/home' , [HomeController::class , "showHome"]);
 
@@ -54,6 +54,15 @@ Route::get('/profile', [ProfileController::class, 'profile']);
 Route::post('/update-profile', [ProfileController::class, 'updateProfile']);
 Route::get('/match', [HousingController::class, 'Match']);
 
+// Routes pour les signalements
+Route::post('/report', [ReportController::class, 'store']);
+Route::get('/admin/reports', [ReportController::class, 'index']);
+Route::post('/admin/report/status', [ReportController::class, 'updateStatus']);
+
+// Chat routes
+Route::get('/chat', [MessageController::class, 'index']);
+Route::get('/messages/{id}', [MessageController::class, 'getMessages']);
+Route::post('/send-message', [MessageController::class, 'sendMessage']);
 
 
 // Dispatch the request
