@@ -1,94 +1,184 @@
 <?php 
 require_once (__DIR__.'/../models/User.php');
+require_once (__DIR__.'/../models/Admin.php');
 
 class AdminController extends BaseController {
-    private $UserModel ;
+    private $UserModel;
+    private $AdminModel;
+    
     public function __construct(){
-
         $this->UserModel = new User();
-  
+        $this->AdminModel = new Admin();
+    
+        if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+            header('Location: /login');
+            exit;
+        }
+    }
+    
+    public function showDashboard(){
         
-     }
+        $users = $this->AdminModel->getAllUsers();
+        
+        $totalUsers = count($users);
+        
+        $adminCount = 0;
+        $youcoderCount = 0;
+        foreach($users as $user) {
+            if($user['role'] === 'admin') {
+                $adminCount++;
+            } else {
+                $youcoderCount++;
+            }
+        }
 
-   public function index() {
-      
-      if(!isset($_SESSION['user_loged_in_id'])){
-         header("Location: /login ");
-         exit;
-      }
-     $statistics =  $this->UserModel->getStatistics();
-    $this->renderDashboard('admin/index', ["statistics" => $statistics]);
-   }
-   
-   public function categories() {
+        $this->render('admin/dashboard', [
+            'users' => $users,
+            'totalUsers' => $totalUsers,
+            'adminCount' => $adminCount,
+            'youcoderCount' => $youcoderCount
+        ]);
+    }
 
-    $this->renderDashboard('admin/categories');
-   }
-   public function testimonials() {
- 
-    $this->renderDashboard('admin/testimonials');
-   }
-   public function projects() {
-  
-    $this->renderDashboard('admin/projects');
-   }
+    public function updateRole() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id']) && isset($_POST['role'])) {
+            $userId = $_POST['user_id'];
+            $newRole = $_POST['role'];
+            
+            $success = $this->AdminModel->updateUserRole($userId, $newRole);
+            
+            if ($success) {
+                header('Location: /dashboard?success=role_updated');
+                exit;
+            } else {
+                header('Location: /dashboard?error=update_failed');
+                exit;
+            }
+        }
+    }
 
-   public function handleUsers(){
-  
+    public function deleteUser() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
+            $userId = $_POST['user_id'];
+            
+            // Supprimer l'utilisateur
+            $success = $this->AdminModel->deleteUser($userId);
+            
+            if ($success) {
+                header('Location: /dashboard?success=user_deleted');
+                exit;
+            } else {
+                header('Location: /dashboard?error=delete_failed');
+                exit;
+            }
+        }
+    }
 
+    public function showAnnonce() {
+        
+        $annonces = $this->AdminModel->getAllAnnonces();
+        
+        $totalAnnonces = count($annonces);
+        $activeAnnonces = 0;
+        $pendingAnnonces = 0;
+        
+        foreach($annonces as $annonce) {
+            if($annonce['statut'] === 'active') {
+                $activeAnnonces++;
+            } elseif($annonce['statut'] === 'inactif') {
+                $pendingAnnonces++;
+            }
+        }
+        
+        $data = [
+            'annonces' => $annonces,
+            'totalAnnonces' => $totalAnnonces,
+            'activeAnnonces' => $activeAnnonces,
+            'pendingAnnonces' => $pendingAnnonces
+        ];
 
-    
-    // Get filter and search values from GET
-    $filter = isset($_GET['filter']) ? $_GET['filter'] : 'all'; // Default to 'all' if no filter is selected
-    $userToSearch = isset($_GET['userToSearch']) ? $_GET['userToSearch'] : ''; // Default to empty if no search term is provided
-    // var_dump($userToSearch);die();
+        $this->render('admin/annonce', $data);
+    }
 
-    // Call showUsers with both filter and search term
-    $users = $this->UserModel->getAllUsers($filter, $userToSearch);
-    $this->renderDashboard('admin/users',["users"=> $users]);
-   }
+    public function updateAnnonceStatus() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['annonce_id']) && isset($_POST['statut'])) {
+            $annonceId = $_POST['annonce_id'];
+            $newStatus = $_POST['statut'];
 
-    // function to remove user
-    // function removeUser($idUser){
-    //     include '../connection.php';
-    //     $removeUser = $conn->prepare("DELETE FROM utilisateurs WHERE id_utilisateur=?");
-    //     $removeUser->execute([$idUser]);
-    // }
-    
-    // // check the post request to remove the user
-    // if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['remove_user'])) {
-    //     $idUser = $_POST['remove_user'];
-    //     removeUser($idUser);
-    //     // Redirect to avoid form resubmission after page reload
-    //     header("Location: users.php");
-    //     exit();
-    // }
+            $success = $this->AdminModel->updateAnnonceStatus($annonceId, $newStatus);
+            
+            if ($success) {
+                header('Location: /dashboard/annonce?success=status_updated');
+                exit;
+            } else {
+                header('Location: /dashboard/annonce?error=update_failed');
+                exit;
+            }
+        }
+    }
 
-    // // function to block user
-    // function changeStatus($idUser){
-    //     include '../connection.php';
+    public function deleteAnnonce() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['annonce_id'])) {
+            $annonceId = $_POST['annonce_id'];
+            
+            $success = $this->AdminModel->deleteAnnonce($annonceId);
+            
+            if ($success) {
+                header('Location: /dashboard/annonce?success=annonce_deleted');
+                exit;
+            } else {
+                header('Location: /dashboard/annonce?error=delete_failed');
+                exit;
+            }
+        }
+    }
 
-    //     // get the old status
-    //     $stmt = $conn->prepare("SELECT is_active FROM utilisateurs WHERE id_utilisateur = ?");
-    //     $stmt->execute([$idUser]);
-    //     $currentStatus = $stmt->fetchColumn();
+    public function showSignalements() {
+        $signalements = $this->AdminModel->getAllSignalements();
+        
+        // Compter les différents types de signalements
+        $totalSignalements = count($signalements);
+        $enAttente = 0;
+        $traites = 0;
+        $rejetes = 0;
+        
+        foreach($signalements as $signalement) {
+            switch($signalement['statut']) {
+                case 'En attente':
+                    $enAttente++;
+                    break;
+                case 'Traité':
+                    $traites++;
+                    break;
+                case 'Rejeté':
+                    $rejetes++;
+                    break;
+            }
+        }
+        
+        $this->render('admin/signalements', [
+            'signalements' => $signalements,
+            'totalSignalements' => $totalSignalements,
+            'enAttente' => $enAttente,
+            'traites' => $traites,
+            'rejetes' => $rejetes
+        ]);
+    }
 
-    //     $changeStatus = $conn->prepare("UPDATE utilisateurs SET is_active=? WHERE id_utilisateur=?");
-    //     $changeStatus->execute([$currentStatus==0?1:0,$idUser]);
-    // }
-    // // check the post request to block the user
-    // if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['block_user_id'])) {
-    //     $idUser = $_POST['block_user_id'];
-    //     changeStatus($idUser);
-    //     // Redirect to avoid form resubmission after page reload
-    //     header("Location: users.php");
-    //     exit();
-    // }
-
-
-
-
-
- 
-
+    public function updateSignalementStatus() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['signalement_id']) && isset($_POST['statut'])) {
+            $signalementId = $_POST['signalement_id'];
+            $newStatus = $_POST['statut'];
+            
+            $success = $this->AdminModel->updateSignalementStatus($signalementId, $newStatus);
+            
+            if ($success) {
+                header('Location: /dashboard/signalements?success=status_updated');
+                exit;
+            } else {
+                header('Location: /dashboard/signalements?error=update_failed');
+                exit;
+            }
+        }
+    }
 }

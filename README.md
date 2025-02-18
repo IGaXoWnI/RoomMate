@@ -14,7 +14,7 @@ RoomMate YouCode est une plateforme dédiée aux étudiants de YouCode pour faci
 ### 👫 **Projet réalisé en équipe** :
 - **BadrEddine MassaAlkhayr**
 - **Salahdine Daha**  
-- **ismail Baguni**  
+- **Ismail Baguni**  
 
 
 ## 🚀 **Fonctionnalités Principales**  
