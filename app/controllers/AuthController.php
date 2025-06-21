@@ -63,8 +63,8 @@ class AuthController extends BaseController {
                 $mail->isSMTP();                              
                 $mail->Host       = 'smtp.gmail.com';       
                 $mail->SMTPAuth   = true;             //Enable SMTP authentication
-                $mail->Username   = 'badrdine03@gmail.com';   //SMTP write your email
-                $mail->Password   = 'rtppygolrobylscs';      //SMTP password
+                $mail->Username   = 'ssdismail443@gmail.com';   //SMTP write your email
+                $mail->Password   = 'unsydxbsktjfsyyf';      //SMTP password
                 $mail->SMTPSecure = 'ssl';            //Enable implicit SSL encryption
                 $mail->Port       = 465;                                    
             
